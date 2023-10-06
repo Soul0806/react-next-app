@@ -1,0 +1,313 @@
+// GLOBAL
+
+:root {
+  --active: #ff0000;
+  --inactive: #cac7c7;
+  --invalid: #ff0000;
+
+  --dialog-border: hwb(0 83% 17%);
+  --bg-modal: hsl(0, 0%, 100%);
+
+  --fs-48: 3rem;
+  --fs-36: 2.25rem;
+  --fs-24: 1.5rem;
+  --fs-18: 1.125rem;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'SF Pro Display', sans-serif;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
+
+  input {
+    outline: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  [type=radio] {
+    margin-inline: 3px;
+  }
+
+  label {
+    line-height: 1;
+  }
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.wrapper {
+  width: calc(100% - 4rem);
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.header {
+
+  z-index: 999;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  margin-top: 10px;
+
+  .header__home {
+    font-size: var(--fs-36);
+  }
+
+  .header__app {
+    // flex: 1 0;
+  }
+
+  .header__backend {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+dialog {
+  width: 50%;
+  border-radius: 20px;
+  border: 1px solid var(--dialog-border);
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .dialog__menu {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    line-height: 2;
+  }
+
+  .dialog__title {
+    flex: 1 0;
+  }
+
+  .dialog__content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px 20px;
+  }
+
+  .dialog__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    [class*="modal"] {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}
+
+
+dialog[open] {
+  animation: fade-in 450ms ease-in-out;
+}
+
+.input-icon {
+  position: relative;
+
+  .price {
+    width: 5rem;
+    padding-left: 25px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    &:focus {
+      opacity: 1;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
+      transform: scale(1.04);
+    }
+  }
+
+  i {
+    position: absolute;
+    display: block;
+    transform: translate(0, -50%);
+    top: 50%;
+    pointer-events: none;
+    width: 25px;
+    text-align: center;
+    font-style: normal;
+  }
+}
+
+.form__group {
+  // width: 10%;
+  position: relative;
+  padding: 15px 0 0;
+
+  &~span {
+    display: block;
+    padding: 10px 0 0;
+  }
+
+  .form__input {
+    width: 100%;
+    outline: 0;
+    font-size: 1rem;
+    border: 0;
+    border-bottom: 2px solid gray;
+    padding: 4px 0;
+    // background-color: transparent;
+    // background-color: red;
+
+    &~label {
+      display: block;
+      position: absolute;
+      font-size: 1rem;
+      transition: .2s;
+    }
+
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:placeholder-shown {
+      &~label {
+        font-size: 1rem;
+        top: 18px;
+      }
+    }
+
+    &:focus {
+      &~label {
+        position: absolute;
+        top: 0;
+        display: block;
+        outline: 0;
+        font-size: .5rem;
+      }
+    }
+  }
+}
+
+// .form__group {
+//   position: relative;
+
+//   label {
+//     position: absolute;
+//     top: 0;
+//   }
+// }
+
+// .form__input {
+//   width: 100%;
+// }
+
+
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.f-1 {
+  flex: 1;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.f-g-1 {
+  flex-grow: 1;
+}
+
+.a-i-center {
+  align-items: center;
+}
+
+.a-i-start {
+  align-items: flex-start;
+}
+
+
+.j-c-end {
+  justify-content: flex-end;
+}
+
+.j-c-between {
+  justify-content: space-between;
+}
+
+.g-1 {
+  gap: 10px;
+}
+
+.d-sign {
+  &:before {
+    content: '$',
+  }
+}
+
+.abs {
+  position: absolute;
+}
+
+.rel {
+  position: relative;
+}
+
+.float-right {
+  float: right;
+}
+
+.r-0 {
+  right: 0;
+}
+
+.invalid {
+  color: var(--invalid);
+}
+
+.red {
+  background-color: rgb(243, 156, 156);
+}
