@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, MutableRefObject } from "react";
+import { useRef, useEffect } from "react";
 import { Dom } from "@/lib/helper";
 
 const DialogRecord = () => {

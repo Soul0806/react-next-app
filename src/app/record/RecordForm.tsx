@@ -1,11 +1,12 @@
 import { useEffect, useState, useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
-import FormSelect from '../Custom/FormSelect';
+import FormSelect from '@/app/components/form/FormSelect';
+import FormRadio from '@/app/components/form/FormRadio';
+
 import { useTire } from '../Tire/useTire';
 import { dt } from '../../lib/helper';
 import { axi } from '../../lib/axios';
-import FormRadio from '../Custom/FormRadio';
 
 import _ from 'lodash'
 
@@ -30,7 +31,7 @@ function SaleForm({ salesState }) {
     const refPrice = useRef();
     const refDate = useRef(new Date());
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [selling, setSelling] = useState({
         id: '',
@@ -135,7 +136,7 @@ function SaleForm({ salesState }) {
         const fileName = 'static/sale.json';
         const data = { fileName, content }
         axi.post(WRITE_API, data);
-        navigate(0);
+        // navigate(0);
     }
 
     function handleClose() {
