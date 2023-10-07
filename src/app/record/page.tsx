@@ -1,6 +1,10 @@
 import DialogRecord from './DialogRecord';
 import readLocalJson from './readLocalJson';
 
+import { queryData } from '@/utils/getFormat';
+
+console.log(queryData(), 123);
+
 const Record = () => {
     const sales = readLocalJson();
 
