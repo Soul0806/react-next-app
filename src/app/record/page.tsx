@@ -2,11 +2,17 @@ import DialogRecord from './DialogRecord';
 import readLocalJson from './readLocalJson';
 
 import { queryData } from '@/utils/getFormat';
+import { create } from '@/utils/createFormat';
 
-console.log(queryData(), 123);
-
-const Record = () => {
+const Record = (data: any) => {
     const sales = readLocalJson();
+    console.log(data);
+    if (false) {
+        // const spec_result = await create(spec);
+    }
+
+    // const result = await queryData();
+    // console.log(result);
 
     return (
         <>
@@ -53,6 +59,23 @@ const Record = () => {
             </div>
         </>
     );
+}
+
+export const getStaticProps = async () => {
+    const url = 'http://localhost:9000';
+    const option = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    const result = await fetch(url, option);
+    console.log(result);
+    const data = await result.json();
+    // const { data: { data } } = res;
+    return {
+        props: { data }
+    }
 }
 
 export default Record;
