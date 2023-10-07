@@ -1,16 +1,27 @@
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+
 import DialogRecord from './DialogRecord';
 import readLocalJson from './readLocalJson';
 
 import { queryData } from '@/utils/getFormat';
 import { create } from '@/utils/createFormat';
 
-const Record = (data: any) => {
+type Spec = {
+    id: Number,
+    format: String
+}
+
+async function getServerSideProps(): Promise<Spec> {
+    const res = await fetch('http://localhost:9000');
+    return res.json();
+}
+
+export default async function Record()  {
     const sales = readLocalJson();
-    console.log(data);
+    const spec = await getServerSideProps();
     if (false) {
         // const spec_result = await create(spec);
     }
-
     // const result = await queryData();
     // console.log(result);
 
@@ -60,22 +71,3 @@ const Record = (data: any) => {
         </>
     );
 }
-
-export const getStaticProps = async () => {
-    const url = 'http://localhost:9000';
-    const option = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }
-    const result = await fetch(url, option);
-    console.log(result);
-    const data = await result.json();
-    // const { data: { data } } = res;
-    return {
-        props: { data }
-    }
-}
-
-export default Record;
