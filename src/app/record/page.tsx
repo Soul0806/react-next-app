@@ -17,13 +17,14 @@ async function getServerSideProps(): Promise<Spec> {
 }
 
 export default async function Record()  {
-    const sales = readLocalJson();
-    const spec = await getServerSideProps();
-    if (false) {
-        // const spec_result = await create(spec);
-    }
-    // const result = await queryData();
-    // console.log(result);
+    // const sales = readLocalJson();
+    // const spec: any = await getServerSideProps();
+    
+    // if (false) {
+    //     spec.map(async (row: any) => {
+    //         await create({format: row.format});
+    //     })
+    // }
 
     return (
         <>
