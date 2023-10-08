@@ -3,12 +3,42 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import DialogRecord from './DialogRecord';
 import readLocalJson from './readLocalJson';
 
-import { queryData } from '@/utils/getFormat';
-import { create } from '@/utils/createFormat';
+import { queryData, table } from '@/utils/readData';
+import { create } from '@/utils/createData';
 
 type Spec = {
-    id: Number,
-    format: String
+    [key: string]: string,
+}
+
+type Gropu_Data = {
+    [key: string]: Spec[]
+}
+
+function writeToNewDb(specs: any) {
+    specs.map(async (item: Spec) => {
+        const format = item.format;
+        if (format.length > 6) {
+            let new_format = format.slice(0, 3) + '/' + format.slice(4, 6) + '-' + format.slice(-2);
+            await create(table.SPECIFICATION, { format: new_format });
+        } else {
+            await create(table.SPECIFICATION, { format: format });
+        }
+    })
+}
+
+function groupData(arr: Spec[]) {
+    let group_data: any = {}
+    arr.map((item: Spec) => {
+        const format = item.format;
+        const inch = format.slice(-2);
+        if (group_data[inch] === undefined) {
+            group_data[inch] = [format];
+        } else {
+            group_data[inch].push(format);
+        }
+    })
+
+    console.log(JSON.stringify(group_data, undefined, 2));
 }
 
 async function getServerSideProps(): Promise<Spec> {
@@ -16,15 +46,12 @@ async function getServerSideProps(): Promise<Spec> {
     return res.json();
 }
 
-export default async function Record()  {
-    // const sales = readLocalJson();
-    // const spec: any = await getServerSideProps();
-    
-    // if (false) {
-    //     spec.map(async (row: any) => {
-    //         await create({format: row.format});
-    //     })
-    // }
+export default async function Record() {
+    const specs: any = await getServerSideProps();
+
+
+    // const specs = await queryData(table.SPECIFICATION);
+    // groupData(specs);
 
     return (
         <>
@@ -55,6 +82,9 @@ export default async function Record()  {
                         </div>
                         {/* <input id="datepicker" /> */}
                     </div>
+                    <section className="record__view">
+                        123
+                    </section>
                     {/* <section className="record__view">
                         <div className="record__overview__view">
                             {!isEmpty(salesState.dbSale) &&

@@ -1,8 +1,8 @@
 import prisma from "./prismaClient";
 
-export const create = async (data) => {
+export const create = async (table, data) => {
     try {
-        const spec = await prisma.specification.create({
+        const spec = await prisma[table].create({
             data: data
         });
         return spec;
