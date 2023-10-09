@@ -58,7 +58,6 @@ export default async function Record() {
             <div className="record">
                 <div className="wrapper">
                     <div className="record__sidebar">
-                        <DialogRecord />
                         <div className="record__operate">
                             <div className="record__operate__insert">
                                 <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
@@ -83,7 +82,7 @@ export default async function Record() {
                         {/* <input id="datepicker" /> */}
                     </div>
                     <section className="record__view">
-                        123
+                        <DialogRecord />
                     </section>
                     {/* <section className="record__view">
                         <div className="record__overview__view">

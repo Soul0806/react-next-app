@@ -3,6 +3,9 @@
 import { useRef, useEffect } from "react";
 import { Dom } from "@/lib/helper";
 
+import RecordForm from "./RecordForm";
+
+
 const DialogRecord = () => {
     // const refSearch = useRef('');
     const ref = useRef(false);
@@ -13,25 +16,25 @@ const DialogRecord = () => {
         // document.getElementById('datepicker').innerHTML = "";
 
         if (ref.current) {
-            Dom('.dialog__sale__open').event('click', () => {
-                refDialogsale?.current?.showModal();
-            })
-            Dom('.dialog__close').event('click', () => {
-                refDialogsale?.current?.close();
-            })
-            Dom(refDialogsale.current).event('click', (e: React.MouseEvent<HTMLElement>) => {
-                const dialogDimensions = refDialogsale?.current?.getBoundingClientRect();
-                if (dialogDimensions != null) {
-                    if (
-                        e.clientX > dialogDimensions.right ||
-                        e.clientX < dialogDimensions.left ||
-                        e.clientY < dialogDimensions.top ||
-                        e.clientY > dialogDimensions.bottom
-                    ) {
-                        refDialogsale?.current?.close();
-                    }
-                }
-            })
+            // Dom('.dialog__sale__open').event('click', () => {
+            //     refDialogsale?.current?.showModal();
+            // })
+            // Dom('.dialog__close').event('click', () => {
+            //     refDialogsale?.current?.close();
+            // })
+            // Dom(refDialogsale?.current).event('click', (e: React.MouseEvent<HTMLElement>) => {
+            //     const dialogDimensions = refDialogsale?.current?.getBoundingClientRect();
+            //     if (dialogDimensions != null) {
+            //         if (
+            //             e.clientX > dialogDimensions.right ||
+            //             e.clientX < dialogDimensions.left ||
+            //             e.clientY < dialogDimensions.top ||
+            //             e.clientY > dialogDimensions.bottom
+            //         ) {
+            //             refDialogsale?.current?.close();
+            //         }
+            //     }
+            // })
 
             // Dom('.overlap').event('click', (e) => {
             //     refSearch.current.value = '';
@@ -58,17 +61,15 @@ const DialogRecord = () => {
         }
     }, [])
     return (
-        <dialog className="dialog dialog__sale" ref={refDialogsale}>
-            <div className="wrapper">
-                <div className="dialog__menu">
-                    <h5 className="dialog__title">新增銷售</h5>
-                    <span className="material-symbols-outlined dialog__close">
-                        Close
-                    </span>
-                </div>
-                {/* <RecordForm salesState={salesState} /> */}
+        <div className="wrapper">
+            <div className="dialog__menu">
+                <h5 className="dialog__title">新增銷售</h5>
+                <span className="material-symbols-outlined dialog__close">
+                    Close
+                </span>
             </div>
-        </dialog>
-    );
+            <RecordForm />
+        </div>
+    )
 }
 export default DialogRecord;

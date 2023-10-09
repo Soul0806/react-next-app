@@ -4,7 +4,7 @@ import { useEffect, useState, useContext, useRef } from 'react';
 import FormSelect from '@/app/components/form/FormSelect';
 import FormRadio from '@/app/components/form/FormRadio';
 
-import { useTire } from '../Tire/useTire';
+// import { useTire } from '../Tire/useTire';
 import { dt } from '../../lib/helper';
 import { axi } from '../../lib/axios';
 
@@ -20,9 +20,9 @@ const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 const toDate = dt.getTodayDate();
 
-function SaleForm({ salesState }) {
+function RecordForm() {
 
-    const [inches] = useTire();
+    // const [inches] = useTire();
     const optionInch = _.range(12, 23);
 
     const [specs, setSpecs] = useState([]);
@@ -122,7 +122,7 @@ function SaleForm({ salesState }) {
     function handleSubmit(e) {
         e.preventDefault();
         const content = {
-            id: salesState.id,
+            // id: salesState.id,
             area: selling.place,
             service: selling.service,
             spec: selling.spec,
@@ -343,4 +343,4 @@ function SaleForm({ salesState }) {
 
     )
 }
-export default SaleForm;
+export default RecordForm;
