@@ -16,9 +16,9 @@ import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
 
 const WRITE_API = `http://localhost:9000/io/writeFile`;
-const SALE_API_URL = `https://localhost:7123/api/Sale/`;
+// const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
-const toDate = dt.getTodayDate();
+// const toDate = dt.getTodayDate();
 
 function RecordForm() {
 
@@ -47,15 +47,15 @@ function RecordForm() {
         createdAt: ''
     });
 
-    const formValidate = {
-        opacity: validate() ? '.4' : 1,
-        cursor: validate() ? 'not-allowed' : 'pointer',
-    }
+    // const formValidate = {
+    //     opacity: validate() ? '.4' : 1,
+    //     cursor: validate() ? 'not-allowed' : 'pointer',
+    // }
 
     let button = {
         content: 'Today',
         className: 'custom-button-classname',
-        onClick: (dp) => {
+        onClick: (dp: { selectDate: (arg0: Date) => void; setViewDate: (arg0: Date) => void; }) => {
             let date = new Date();
             dp.selectDate(date);
             dp.setViewDate(date);
@@ -63,11 +63,11 @@ function RecordForm() {
         }
     }
 
-    function validate() {
-        return !selling.place || !selling.price || !selling.quantity || !selling.pay || (selling.service != 'fix' && !selling.spec)
-            ? true
-            : false
-    }
+    // function validate() {
+    //     return !selling.place || !selling.price || !selling.quantity || !selling.pay || (selling.service != 'fix' && !selling.spec)
+    //         ? true
+    //         : false
+    // }
 
     useEffect(() => {
         if (ref.current) {
@@ -119,7 +119,7 @@ function RecordForm() {
             }
         })
     }
-    function handleSubmit(e) {
+    function handleSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault();
         const content = {
             // id: salesState.id,
@@ -262,7 +262,7 @@ function RecordForm() {
         }
     ]
 
-    function onchange(e) {
+    function onchange(e: { target: { name: any; value: any; }; }) {
         setSelling(prev => {
             const { name, value } = e.target;
             return {
@@ -335,6 +335,7 @@ function RecordForm() {
                         <input id="note" name="note" type="text" onChange={handleChange} />
                     </div>
                     <div className="modal-footer">
+                        {/* <button type="submit" style={formValidate} className="btn btn-primary">Send message</button> */}
                         <button type="submit" style={formValidate} className="btn btn-primary">Send message</button>
                     </div>
                 </form>

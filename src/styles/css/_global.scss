@@ -23,6 +23,7 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
+  outline: 0;
 }
 
 body {
@@ -58,11 +59,11 @@ body {
   }
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
+// #root {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 30px;
+// }
 
 .container {
   display: flex;

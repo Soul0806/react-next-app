@@ -59,11 +59,7 @@ export default async function Record() {
                 <div className="wrapper">
                     <div className="record__sidebar">
                         <div className="record__operate">
-                            <div className="record__operate__insert">
-                                <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
-                                    新增銷售
-                                </button>
-                            </div>
+                            <DialogRecord />
                             {/* <div className="record__operate__input">
                                 <input id="" type="text" ref={refSearch} onChange={handleSearch} />
                                 <svg class="feather feather-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /></svg>
@@ -82,7 +78,6 @@ export default async function Record() {
                         {/* <input id="datepicker" /> */}
                     </div>
                     <section className="record__view">
-                        <DialogRecord />
                     </section>
                     {/* <section className="record__view">
                         <div className="record__overview__view">
