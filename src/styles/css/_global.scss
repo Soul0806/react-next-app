@@ -23,7 +23,6 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
-  outline: 0;
 }
 
 body {
@@ -127,11 +126,11 @@ dialog {
     flex: 1 0;
   }
 
-  .dialog__content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px 20px;
-  }
+  // .dialog__content {
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 10px 20px;
+  // }
 
   .dialog__form {
     display: flex;
@@ -142,6 +141,10 @@ dialog {
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    label > input {
+      margin-left: 4px;
     }
   }
 }

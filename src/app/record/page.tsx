@@ -6,11 +6,13 @@ import readLocalJson from './readLocalJson';
 import { queryData, table } from '@/utils/readData';
 import { create } from '@/utils/createData';
 
+// import { GroupDataProvider } from './GroupDataProvider';
+
 type Spec = {
     [key: string]: string,
 }
 
-type Gropu_Data = {
+type GroupData = {
     [key: string]: Spec[]
 }
 
@@ -26,19 +28,19 @@ function writeToNewDb(specs: any) {
     })
 }
 
-function groupData(arr: Spec[]) {
-    let group_data: any = {}
+function getGroupData(arr: Spec[]) {
+    let groupData: any = {}
     arr.map((item: Spec) => {
         const format = item.format;
         const inch = format.slice(-2);
-        if (group_data[inch] === undefined) {
-            group_data[inch] = [format];
+        if (groupData[inch] === undefined) {
+            groupData[inch] = [format];
         } else {
-            group_data[inch].push(format);
+            groupData[inch].push(format);
         }
     })
 
-    console.log(JSON.stringify(group_data, undefined, 2));
+    return groupData;
 }
 
 async function getServerSideProps(): Promise<Spec> {
@@ -47,11 +49,9 @@ async function getServerSideProps(): Promise<Spec> {
 }
 
 export default async function Record() {
-    const specs: any = await getServerSideProps();
-
-
-    // const specs = await queryData(table.SPECIFICATION);
-    // groupData(specs);
+    // const specs: any = await getServerSideProps();
+    const specs = await queryData(table.SPECIFICATION);
+    const groupData = getGroupData(specs);
 
     return (
         <>
@@ -59,7 +59,7 @@ export default async function Record() {
                 <div className="wrapper">
                     <div className="record__sidebar">
                         <div className="record__operate">
-                            <DialogRecord />
+                            <DialogRecord groupData={groupData}/>
                             {/* <div className="record__operate__input">
                                 <input id="" type="text" ref={refSearch} onChange={handleSearch} />
                                 <svg class="feather feather-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /></svg>

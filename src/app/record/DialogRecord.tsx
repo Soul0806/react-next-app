@@ -1,12 +1,21 @@
 'use client'
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, createContext, useContext } from "react";
+import RecordForm from "./RecordForm";
 import { Dom } from "@/lib/helper";
 
-import RecordForm from "./RecordForm";
+import { queryData, table } from '@/utils/readData';
 
+export type Spec = {
+    [key: string]: string
+}
+ 
+export type GroupData = {
+    [key: string]: Spec[]
+}
+export const GroupDataContext = createContext<GroupData | null>(null);
 
-const DialogRecord = () => {
+const DialogRecord = ({ groupData }: { groupData: GroupData}) => {
     // const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
@@ -62,22 +71,24 @@ const DialogRecord = () => {
     }, [])
     return (
         <>
-            <div className="record__operate__insert">
-                <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
-                    新增銷售
-                </button>
-            </div>
-            <dialog ref={refDialogsRecord}>
-                <div className="wrapper">
-                    <div className="dialog__menu">
-                        <h5 className="dialog__title">新增銷售</h5>
-                        <span className="material-symbols-outlined dialog__close">
-                            Close
-                        </span>
-                    </div>
-                    <RecordForm />
+            <GroupDataContext.Provider value={groupData}>
+                <div className="record__operate__insert">
+                    <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
+                        新增銷售
+                    </button>
                 </div>
-            </dialog>
+                <dialog ref={refDialogsRecord}>
+                    <div className="wrapper">
+                        <div className="dialog__menu">
+                            <h5 className="dialog__title">新增銷售</h5>
+                            <span className="material-symbols-outlined dialog__close">
+                                Close
+                            </span>
+                        </div>
+                        <RecordForm />
+                    </div>
+                </dialog>
+            </GroupDataContext.Provider>
         </>
     )
 }

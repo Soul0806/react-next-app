@@ -1,8 +1,16 @@
+'use client'
+
 import { useEffect, useState, useContext, useRef } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 import FormSelect from '@/app/components/form/FormSelect';
 import FormRadio from '@/app/components/form/FormRadio';
+
+// Context
+import { GroupDataContext } from './DialogRecord';
+
+// Type 
+import type {GroupData} from './DialogRecord';
 
 // import { useTire } from '../Tire/useTire';
 import { dt } from '../../lib/helper';
@@ -22,7 +30,8 @@ const WRITE_API = `http://localhost:9000/io/writeFile`;
 
 function RecordForm() {
 
-    // const [inches] = useTire();
+    console.log(useContext(GroupDataContext));
+    // const [inches] = useTire
     const optionInch = _.range(12, 23);
 
     const [specs, setSpecs] = useState([]);
@@ -33,7 +42,7 @@ function RecordForm() {
 
     // const navigate = useNavigate();
 
-    const [selling, setSelling] = useState({
+    const [record, setRecord] = useState({
         id: '',
         place: '',
         service: '',
@@ -64,7 +73,7 @@ function RecordForm() {
     }
 
     // function validate() {
-    //     return !selling.place || !selling.price || !selling.quantity || !selling.pay || (selling.service != 'fix' && !selling.spec)
+    //     return !record.place || !record.price || !record.quantity || !record.pay || (record.service != 'fix' && !record.spec)
     //         ? true
     //         : false
     // }
@@ -81,7 +90,7 @@ function RecordForm() {
                 onSelect: function ({ date, datepicker }) {
                     if (!date) return;
                     datepicker.nav.$title.innerHTML = date.toDate();
-                    setSelling(prev => {
+                    setRecord(prev => {
                         return {
                             ...prev,
                             date: date.toDate(),
@@ -97,22 +106,21 @@ function RecordForm() {
     }, [])
 
     useEffect(() => {
-        if (selling.inch) {
+        if (record.inch) {
             setSpecs((prev) => {
-                return Object.keys(inches[selling['inch']]['spec']).sort();
+                return Object.keys(inches[record['inch']]['spec']).sort();
             })
         }
-    }, [selling.inch])
+    }, [record.inch])
 
 
     useEffect(() => {
-        selling.quantity && refPrice.current.focus();
-    }, [selling.quantity])
+        record.quantity && refPrice.current.focus();
+    }, [record.quantity])
 
     function handleChange(e) {
-        e.target.name == 'price' && refPrice.current.focus();
         const { name, value } = e.target;
-        setSelling(prev => {
+        setRecord(prev => {
             return {
                 ...prev,
                 [name]: value,
@@ -123,14 +131,14 @@ function RecordForm() {
         e.preventDefault();
         const content = {
             // id: salesState.id,
-            area: selling.place,
-            service: selling.service,
-            spec: selling.spec,
-            price: selling.price,
-            quantity: selling.quantity,
-            pay: selling.pay,
-            note: selling.note,
-            date: selling.date,
+            area: record.place,
+            service: record.service,
+            spec: record.spec,
+            price: record.price,
+            quantity: record.quantity,
+            pay: record.pay,
+            note: record.note,
+            date: record.date,
             createdAt: dt.getDateTime()
         }
         const fileName = 'static/sale.json';
@@ -140,7 +148,7 @@ function RecordForm() {
     }
 
     function handleClose() {
-        // setSelling({
+        // setRecord({
         //     place: '',
         //     service: '',
         //     inch: '',
@@ -156,7 +164,7 @@ function RecordForm() {
             id: "price",
             type: "text",
             name: "price",
-            value: selling.price,
+            value: record.price,
             pattern: '^[^0a-zA-Z]\\d{1,}',
             label: "價格",
             onchange: onchange,
@@ -263,7 +271,7 @@ function RecordForm() {
     ]
 
     function onchange(e: { target: { name: any; value: any; }; }) {
-        setSelling(prev => {
+        setRecord(prev => {
             const { name, value } = e.target;
             return {
                 ...prev,
@@ -281,7 +289,7 @@ function RecordForm() {
                             return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                         })}
                         {
-                            !selling.place && <span className="invalid">請選擇地點</span>
+                            !record.place && <span className="invalid">請選擇地點</span>
                         }
                     </div>
                     <div className="modal-service">
@@ -289,14 +297,14 @@ function RecordForm() {
                             return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                         })}
                         {
-                            !selling.service && <span className="invalid">請選擇服務</span>
+                            !record.service && <span className="invalid">請選擇服務</span>
                         }
                     </div>
-                    {selling.service != 'fix' &&
+                    {record.service != 'fix' &&
                         <div className="modal-tire" onChange={handleChange}>
                             <div>規格</div>
                             <div>
-                                <FormSelect name="inch" option={optionInch} selling={selling} />
+                                <FormSelect name="inch" option={optionInch}/>
                             </div>
                             {specs.length != 0 &&
                                 <div>
@@ -312,9 +320,9 @@ function RecordForm() {
                         </div>
                     </div>
                     <div className="input-icon modal-input-icon">
-                        <input ref={refPrice} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
+                        <input ref={refPrice} className="price" name="price" type="text" placeholder="0.0" value={record.price} onChange={handleChange} />
                         <i>$</i>
-                        {selling.service == 'fix' &&
+                        {record.service == 'fix' &&
                             <>
                                 {inputRadioPrice.map(radio => {
                                     return <FormRadio key={radio.id} {...radio} onchange={onchange} />
@@ -327,7 +335,7 @@ function RecordForm() {
                             return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                         })}
                         {
-                            !selling.pay && <span className="invalid">請選擇付款方式</span>
+                            !record.pay && <span className="invalid">請選擇付款方式</span>
                         }
                     </div>
                     <div className="modal-note">
@@ -336,7 +344,7 @@ function RecordForm() {
                     </div>
                     <div className="modal-footer">
                         {/* <button type="submit" style={formValidate} className="btn btn-primary">Send message</button> */}
-                        <button type="submit" style={formValidate} className="btn btn-primary">Send message</button>
+                        <button type="submit" className="btn btn-primary">Send message</button>
                     </div>
                 </form>
             </div>
