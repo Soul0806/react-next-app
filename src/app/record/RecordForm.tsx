@@ -27,7 +27,7 @@ import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
 
-const WRITE_API = `http://localhost:9000/io/writeFile`;
+const RECORD_API = `http://localhost:3000/api/record`;
 // const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 // const toDate = dt.getTodayDate();
@@ -143,9 +143,9 @@ function RecordForm() {
             }
         })
     }
-    function handleSubmit(e: { preventDefault: () => void; }) {
+    async function handleSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault();
-        const content = {
+        const payload = {
             id: lastId + 1,
             area: record.place,
             service: record.service,
@@ -155,14 +155,17 @@ function RecordForm() {
             pay: record.pay,
             note: record.note,
             date: record.date,
-            // createdAt: dt.getDateTime()
+            createdAt: dt.getDateTime()
         }
 
-        console.log(content);
-        // const fileName = 'static/sale.json';
-        // const data = { fileName, content }
-        // axi.post(WRITE_API, data);
-        // navigate(0);
+        console.log(payload);
+
+        // const result = await fetch('http://localhost:3000/api/record');
+        // const test = await result.json();
+        // console.log(test);
+
+        axi.post(RECORD_API, payload);
+
     }
 
     function handleClose() {

@@ -25,5 +25,5 @@ model Record {
   pay       String
   note      String
   date      String
-  createdAt DateTime @default(now())
+  createdAt String
 }
