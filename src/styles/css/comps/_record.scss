@@ -165,6 +165,12 @@
 
 }
 
+dialog {
+  .modal-price>.price {
+    width: 10ch;
+  }
+}
+
 // }
 
 @media(max-width: 768px) {

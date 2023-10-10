@@ -1,7 +1,7 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
 import DialogRecord from './DialogRecord';
-// import readLocalJson from './readLocalJson';
+import readLocalJson from './readLocalJson';
 
 import { queryData, table } from '@/utils/readData';
 import { create } from '@/utils/createData';
@@ -59,7 +59,7 @@ export default async function Record() {
     if (false) {
         const records = await readLocalJson('sale.json');
         records.map(async (item: any) => {
-            console.log(item);
+            // console.log(item);
             await create('Record', item);
         })
     }

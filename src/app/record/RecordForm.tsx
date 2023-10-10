@@ -56,7 +56,7 @@ function RecordForm() {
     //  State 
     const [format, setFormat] = useState<string[]>([]);
     const [record, setRecord] = useState({
-        id: '',
+        id: lastId + 1,
         place: '',
         service: '',
         inch: DEFAULT_INCH,
@@ -66,7 +66,7 @@ function RecordForm() {
         pay: '',
         note: '',
         date: dt.getTodayDate(),
-        createdAt: ''
+        // createdAt: ''
     });
 
     // const formValidate = {
@@ -125,9 +125,9 @@ function RecordForm() {
         }
     }, [record.inch])
 
-    useEffect(() => {
-        console.log(record);
-    }, [record])
+    // useEffect(() => {
+    //     console.log(record);
+    // }, [record])
 
 
     // useEffect(() => {
@@ -146,7 +146,7 @@ function RecordForm() {
     function handleSubmit(e: { preventDefault: () => void; }) {
         e.preventDefault();
         const content = {
-            // id: salesState.id,
+            id: lastId + 1,
             area: record.place,
             service: record.service,
             spec: record.spec,
@@ -155,8 +155,10 @@ function RecordForm() {
             pay: record.pay,
             note: record.note,
             date: record.date,
-            createdAt: dt.getDateTime()
+            // createdAt: dt.getDateTime()
         }
+
+        console.log(content);
         // const fileName = 'static/sale.json';
         // const data = { fileName, content }
         // axi.post(WRITE_API, data);
@@ -210,13 +212,15 @@ function RecordForm() {
                             }
                         </div>
                     }
-                    <div className="modal-quantity" onChange={handleChange} >
-                        <div>數量</div>
-                        <div>
-                            <FormSelect name="quantity" option={_.range(1, 11)} />
+                    {record.service == 'tire-change' &&
+                        <div className="modal-quantity" onChange={handleChange} >
+                            <div>數量</div>
+                            <div>
+                                <FormSelect name="quantity" option={_.range(1, 11)} />
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-icon modal-input-icon">
+                    }
+                    <div className="modal-price input-icon">
                         <input className="price" name="price" type="text" placeholder="0.0" value={record.price} onChange={handleChange} />
                         <i>$</i>
                         {/* {record.service == 'fix' &&
