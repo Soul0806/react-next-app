@@ -10,5 +10,6 @@ export const queryData = async (table) => {
 }
 
 export const table = {
-    SPECIFICATION: 'specification',
+    SPECIFICATION: 'Specification',
+    RECORD: 'Record',
 }

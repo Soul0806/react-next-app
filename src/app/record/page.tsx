@@ -1,7 +1,7 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
 import DialogRecord from './DialogRecord';
-import readLocalJson from './readLocalJson';
+// import readLocalJson from './readLocalJson';
 
 import { queryData, table } from '@/utils/readData';
 import { create } from '@/utils/createData';
@@ -11,12 +11,11 @@ import { create } from '@/utils/createData';
 type Spec = {
     [key: string]: string,
 }
-
 type GroupData = {
-    [key: string]: Spec[]
+    [key: string]: string[]
 }
 
-function writeToNewDb(specs: any) {
+function writeToNewDb(specs: Spec[]) {
     specs.map(async (item: Spec) => {
         const format = item.format;
         if (format.length > 6) {
@@ -50,8 +49,20 @@ async function getServerSideProps(): Promise<Spec> {
 
 export default async function Record() {
     // const specs: any = await getServerSideProps();
+
     const specs = await queryData(table.SPECIFICATION);
     const groupData = getGroupData(specs);
+
+    const records = await queryData(table.RECORD);
+    const record_last_id = records.at(-1).id;
+
+    if (false) {
+        const records = await readLocalJson('sale.json');
+        records.map(async (item: any) => {
+            console.log(item);
+            await create('Record', item);
+        })
+    }
 
     return (
         <>
@@ -59,7 +70,7 @@ export default async function Record() {
                 <div className="wrapper">
                     <div className="record__sidebar">
                         <div className="record__operate">
-                            <DialogRecord groupData={groupData}/>
+                            <DialogRecord groupData={groupData} lastId={record_last_id} />
                             {/* <div className="record__operate__input">
                                 <input id="" type="text" ref={refSearch} onChange={handleSearch} />
                                 <svg class="feather feather-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /></svg>

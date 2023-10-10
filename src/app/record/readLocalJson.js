@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
-// 读取本地JSON文件的路径
-const filePath = path.join(process.cwd(), 'public', 'sale.json'); // 替换为您的JSON文件路径
 
-function readLocalJson() {
+
+function readLocalJson(fileName) {
+    // 读取本地JSON文件的路径
+    const filePath = path.join(process.cwd(), 'public', fileName); // 替换为您的JSON文件路径
     try {
         // 读取JSON文件
         const jsonData = fs.readFileSync(filePath, 'utf-8');

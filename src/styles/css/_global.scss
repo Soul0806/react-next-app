@@ -118,7 +118,7 @@ dialog {
   .dialog__menu {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     line-height: 2;
   }
 
@@ -143,8 +143,12 @@ dialog {
       gap: 10px;
     }
 
-    label > input {
+    label>input {
       margin-left: 4px;
+    }
+
+    [type="submit"] {
+      flex: 1;
     }
   }
 }

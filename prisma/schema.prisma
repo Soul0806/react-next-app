@@ -14,3 +14,16 @@ model Specification {
   id     Int    @id @default(autoincrement())
   format String
 }
+
+model Record {
+  id        Int    @id @default(autoincrement())
+  area      String
+  service   String
+  spec      String
+  quantity  String
+  price     String
+  pay       String
+  note      String
+  date      String
+  createdAt String
+}

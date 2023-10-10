@@ -6,20 +6,22 @@ import { Dom } from "@/lib/helper";
 
 import { queryData, table } from '@/utils/readData';
 
-export type Spec = {
-    [key: string]: string
-}
- 
 export type GroupData = {
-    [key: string]: Spec[]
+    [key: string]: string[]
 }
-export const GroupDataContext = createContext<GroupData | null>(null);
+export const Context = createContext<GroupData | {}>({});
+// export const LastIdContext = createContext<string | null>(null);
 
-const DialogRecord = ({ groupData }: { groupData: GroupData}) => {
+const DialogRecord = ({ groupData, lastId }: { groupData: GroupData, lastId: string }) => {
     // const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
     const refDialogsRecord = useRef<HTMLDialogElement>(null);
+
+    // const context = {
+    //     groupData,
+    //     lastId
+    // }
 
     useEffect(() => {
         // document.getElementById('datepicker').innerHTML = "";
@@ -71,7 +73,7 @@ const DialogRecord = ({ groupData }: { groupData: GroupData}) => {
     }, [])
     return (
         <>
-            <GroupDataContext.Provider value={groupData}>
+            <Context.Provider value={{ groupData, lastId }}>
                 <div className="record__operate__insert">
                     <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
                         新增銷售
@@ -88,7 +90,7 @@ const DialogRecord = ({ groupData }: { groupData: GroupData}) => {
                         <RecordForm />
                     </div>
                 </dialog>
-            </GroupDataContext.Provider>
+            </Context.Provider>
         </>
     )
 }
