@@ -1,7 +1,8 @@
 'use client'
-
+// import { useRouter } from "next/router";
 import { useEffect, useState, useContext, useRef } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import Router from "next/router";
+
 
 import FormSelect from '@/app/components/form/FormSelect';
 import FormRadio from '@/app/components/form/FormRadio';
@@ -50,8 +51,8 @@ function RecordForm() {
     const refDate = useRef(new Date());
     const refPrice = useRef<HTMLInputElement>(null);
 
-    // Nevigate 
-    // const navigate = useNavigate();
+    //  Router
+
 
     //  State 
     const [format, setFormat] = useState<string[]>([]);
@@ -158,14 +159,8 @@ function RecordForm() {
             createdAt: dt.getDateTime()
         }
 
-        console.log(payload);
-
-        // const result = await fetch('http://localhost:3000/api/record');
-        // const test = await result.json();
-        // console.log(test);
-
         axi.post(RECORD_API, payload);
-
+        Router.reload();
     }
 
     function handleClose() {
