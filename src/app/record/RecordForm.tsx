@@ -197,7 +197,7 @@ function RecordForm() {
                             !record.service && <span className="invalid">請選擇服務</span>
                         }
                     </div>
-                    {record.service != 'fix' &&
+                    {record.service == 'tire-change' &&
                         <div className="modal-tire" onChange={handleChange}>
                             <div>規格</div>
                             <div>
@@ -219,13 +219,13 @@ function RecordForm() {
                     <div className="input-icon modal-input-icon">
                         <input className="price" name="price" type="text" placeholder="0.0" value={record.price} onChange={handleChange} />
                         <i>$</i>
-                        {record.service == 'fix' &&
+                        {/* {record.service == 'fix' &&
                             <>
                                 {inputRadioPrice.map(radio => {
                                     return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                                 })}
                             </>
-                        }
+                        } */}
                     </div>
                     <div className="modal-pay">
                         {inputRadioPay.map(radio => {
