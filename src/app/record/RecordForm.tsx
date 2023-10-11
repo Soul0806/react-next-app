@@ -1,4 +1,5 @@
 'use client'
+
 // import { useRouter } from "next/router";
 import { useEffect, useState, useContext, useRef } from 'react';
 import Router from "next/router";
@@ -158,9 +159,10 @@ function RecordForm() {
             date: record.date,
             createdAt: dt.getDateTime()
         }
-
-        axi.post(RECORD_API, payload);
-        Router.reload();
+        // console.log(payload);
+        const result = await axi.post(RECORD_API, payload);
+        console.log(result);
+        // Router.reload();
     }
 
     function handleClose() {
