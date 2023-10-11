@@ -16,7 +16,7 @@ model Specification {
 }
 
 model Record {
-  id        Int      @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   area      String
   service   String
   spec      String
