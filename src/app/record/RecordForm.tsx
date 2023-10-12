@@ -1,8 +1,7 @@
 'use client'
 
-// import { useRouter } from "next/router";
 import { useEffect, useState, useContext, useRef } from 'react';
-import Router from "next/router";
+// import Router from "next/router";
 
 
 import FormSelect from '@/app/components/form/FormSelect';
@@ -161,7 +160,7 @@ function RecordForm() {
         }
         // console.log(payload);
         const result = await axi.post(RECORD_API, payload);
-        console.log(result);
+        // console.log(result);
         // Router.reload();
     }
 
