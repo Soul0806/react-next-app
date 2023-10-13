@@ -124,25 +124,26 @@ function RecordForm() {
         e.preventDefault();
         if (refSubmitButton.current != undefined) {
             refSubmitButton.current.disabled = true;
-        }
-        const payload = {
-            // id: lastId + 1,
-            area: record.place,
-            service: record.service,
-            spec: record.spec,
-            price: record.price,
-            quantity: record.quantity,
-            pay: record.pay,
-            note: record.note,
-            date: record.date,
-            createdAt: dt.getDateTime()
-        }
 
-        notify(() => {
-            if (refSubmitButton.current != undefined) {
-                refSubmitButton.current.disabled = false;
+            const payload = {
+                // id: lastId + 1,
+                area: record.place,
+                service: record.service,
+                spec: record.spec,
+                price: record.price,
+                quantity: record.quantity,
+                pay: record.pay,
+                note: record.note,
+                date: record.date,
+                createdAt: dt.getDateTime()
             }
-        });
+
+            notify(() => {
+
+                refSubmitButton.current.disabled = false;
+
+            });
+        }
         // const result = await axi.post(RECORD_API, payload);
         // if (!isEmpty(result.data)) {
         //     console.log('Successful');
