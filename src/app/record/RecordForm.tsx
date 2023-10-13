@@ -50,6 +50,7 @@ function RecordForm() {
     const ref = useRef(false);
     const refDate = useRef(new Date());
     const refPrice = useRef<HTMLInputElement>(null);
+    const refSubmitButton = useRef<HTMLButtonElement>(null);
 
     //  Router
 
@@ -94,6 +95,9 @@ function RecordForm() {
 
     useEffect(() => {
         if (ref.current) {
+            // refSubmitButton?.current? = true;      
+            // console.log(refSubmitButton?.current?.disabled);
+
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -145,9 +149,18 @@ function RecordForm() {
         })
     }
     async function handleSubmit(e: { preventDefault: () => void; }) {
+
         e.preventDefault();
+        // if (refSubmitButton.current != undefined) {
+        //     refSubmitButton.current.disabled = true;
+        //     setInterval(() => {
+        //         if (refSubmitButton.current != undefined) {
+        //             refSubmitButton.current.disabled = false;
+        //         }
+        //     }, 5000)
+        // }
         const payload = {
-            id: lastId + 1,
+            // id: lastId + 1,
             area: record.place,
             service: record.service,
             spec: record.spec,
@@ -160,6 +173,7 @@ function RecordForm() {
         }
         // console.log(payload);
         const result = await axi.post(RECORD_API, payload);
+        console.log(result);
         // console.log(result);
         // Router.reload();
     }
@@ -245,7 +259,7 @@ function RecordForm() {
                     </div>
                     <div className="modal-footer">
                         {/* <button type="submit" style={formValidate} className="btn btn-primary">Send message</button> */}
-                        <button type="submit" className="btn btn-primary">Send message</button>
+                        <button type="submit" ref={refSubmitButton} className="btn btn-primary">Send message</button>
                     </div>
                 </form>
             </div>
