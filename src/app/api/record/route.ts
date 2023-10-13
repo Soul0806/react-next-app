@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const querySql: string = `INSERT INTO record (${column_string}) VALUES (${values_string})`;
     const values: string[] = [];
     const result = await query(querySql, values);
-    return Response.json({ ok: 'ok' });
+    return Response.json(result);
   } catch (error) {
     return Response.json({ error })
   }

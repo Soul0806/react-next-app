@@ -3,7 +3,6 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 // import Router from "next/router";
 
-
 import FormSelect from '@/app/components/form/FormSelect';
 import FormRadio from '@/app/components/form/FormRadio';
 
@@ -12,16 +11,13 @@ import { inputRadioPay, inputRadioPlace, inputRadioPrice, inputRadioService } fr
 
 // Context
 import { Context } from './DialogRecord';
-// import { LastIdContext } from './DialogRecord';
-
-// Type 
-import type { GroupData } from './DialogRecord';
 
 // import { useTire } from '../Tire/useTire';
 import { dt } from '../../lib/helper';
-import { axi } from '../../lib/axios';
+import { notify } from '@/lib/notify';
 
-import _ from 'lodash'
+// Third Party
+import _, { isEmpty } from 'lodash'
 
 // Air Datepicker 
 import AirDatepicker from 'air-datepicker';
@@ -29,9 +25,6 @@ import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
 
 const RECORD_API = `http://localhost:3000/api/record`;
-// const SALE_API_URL = `https://localhost:7123/api/Sale/`;
-
-// const toDate = dt.getTodayDate();
 
 function RecordForm() {
     /*
@@ -54,7 +47,6 @@ function RecordForm() {
 
     //  Router
 
-
     //  State 
     const [format, setFormat] = useState<string[]>([]);
     const [record, setRecord] = useState({
@@ -68,19 +60,7 @@ function RecordForm() {
         pay: '',
         note: '',
         date: dt.getTodayDate(),
-        // createdAt: ''
     });
-
-    // const formValidate = {
-    //     opacity: validate() ? '.4' : 1,
-    //     cursor: validate() ? 'not-allowed' : 'pointer',
-    // }
-
-    // function validate() {
-    //     return !record.place || !record.price || !record.quantity || !record.pay || (record.service != 'fix' && !record.spec)
-    //         ? true
-    //         : false
-    // }
 
     let button = {
         content: 'Today',
@@ -130,15 +110,6 @@ function RecordForm() {
         }
     }, [record.inch])
 
-    // useEffect(() => {
-    //     console.log(record);
-    // }, [record])
-
-
-    // useEffect(() => {
-    //     record.quantity && refPrice.current.focus();
-    // }, [record.quantity])
-
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
         setRecord(prev => {
@@ -151,14 +122,9 @@ function RecordForm() {
     async function handleSubmit(e: { preventDefault: () => void; }) {
 
         e.preventDefault();
-        // if (refSubmitButton.current != undefined) {
-        //     refSubmitButton.current.disabled = true;
-        //     setInterval(() => {
-        //         if (refSubmitButton.current != undefined) {
-        //             refSubmitButton.current.disabled = false;
-        //         }
-        //     }, 5000)
-        // }
+        if (refSubmitButton.current != undefined) {
+            refSubmitButton.current.disabled = true;
+        }
         const payload = {
             // id: lastId + 1,
             area: record.place,
@@ -171,11 +137,17 @@ function RecordForm() {
             date: record.date,
             createdAt: dt.getDateTime()
         }
-        // console.log(payload);
-        const result = await axi.post(RECORD_API, payload);
-        console.log(result);
-        // console.log(result);
-        // Router.reload();
+
+        notify(() => {
+            if (refSubmitButton.current != undefined) {
+                refSubmitButton.current.disabled = false;
+            }
+        });
+        // const result = await axi.post(RECORD_API, payload);
+        // if (!isEmpty(result.data)) {
+        //     console.log('Successful');
+        // }
+
     }
 
     function handleClose() {
