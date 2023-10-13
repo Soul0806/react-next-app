@@ -14,7 +14,9 @@ import { Context } from './DialogRecord';
 
 // import { useTire } from '../Tire/useTire';
 import { dt } from '../../lib/helper';
+import { axi } from '@/lib/axios';
 import { notify } from '@/lib/notify';
+
 
 // Third Party
 import _, { isEmpty } from 'lodash'
@@ -61,6 +63,7 @@ function RecordForm() {
         note: '',
         date: dt.getTodayDate(),
     });
+    const [id, setId] = useState(lastId + 1);
 
     let button = {
         content: 'Today',
@@ -75,8 +78,6 @@ function RecordForm() {
 
     useEffect(() => {
         if (ref.current) {
-            // refSubmitButton?.current? = true;      
-            // console.log(refSubmitButton?.current?.disabled);
 
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
@@ -122,33 +123,33 @@ function RecordForm() {
     async function handleSubmit(e: { preventDefault: () => void; }) {
 
         e.preventDefault();
-        if (refSubmitButton.current != undefined) {
-            refSubmitButton.current.disabled = true;
 
-            const payload = {
-                // id: lastId + 1,
-                area: record.place,
-                service: record.service,
-                spec: record.spec,
-                price: record.price,
-                quantity: record.quantity,
-                pay: record.pay,
-                note: record.note,
-                date: record.date,
-                createdAt: dt.getDateTime()
-            }
+        const submitButton = refSubmitButton.current;
+        if (submitButton) {
+            submitButton.disabled = true;
+        }
+        const payload = {
+            area: record.place,
+            service: record.service,
+            spec: record.spec,
+            price: record.price,
+            quantity: record.quantity,
+            pay: record.pay,
+            note: record.note,
+            date: record.date,
+            createdAt: dt.getDateTime()
+        }
+        const result = await axi.post(RECORD_API, payload);
 
-            notify(() => {
-
-                refSubmitButton.current.disabled = false;
-
+        if (!isEmpty(result.data)) {
+            const id = result.data.insertId;
+            notify(id, () => {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                }
+                setId(id + 1);
             });
         }
-        // const result = await axi.post(RECORD_API, payload);
-        // if (!isEmpty(result.data)) {
-        //     console.log('Successful');
-        // }
-
     }
 
     function handleClose() {

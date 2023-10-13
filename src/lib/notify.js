@@ -1,17 +1,24 @@
-export function notify(callback) {
-    const div = document.createElement('div');
-    const container = document.querySelector('.container');
-    div.innerText = '新增成功';
-    div.id = 'notify__sucess';
-    document.body.insertBefore(div, container);
-
-    div.addEventListener("animationend", (event) => {
-        div.remove();
-        console.log('completed');
+function event_animationEnd(elem, callback) {
+    elem.addEventListener("animationend", (event) => {
+        elem.remove();
         callback();
     });
-    // div.style.animationPlayState = 'running';
-    // container.insertBefore(div);
+}
+
+export function notify(id, callback) {   
+    const container = document.querySelector('.container');
+    const div = document.createElement('div');
+    div.innerText = `新增成功 - No.${id}`;
+    console.log(callback);
+    // Event binding
+    event_animationEnd(div, callback);
+
+    // Insert element
+    document.body.insertBefore(div, container);
+
+    // Running animation
+    div.classList.toggle('notify__sucess');
+
 }
 
 
