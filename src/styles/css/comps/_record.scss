@@ -26,6 +26,20 @@
   width: 20ch;
 }
 
+.record__operate__insert {
+  .dialog__sale__open {
+    padding: .5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: calc(10px);
+    background-color: transparent;
+    
+    font-weight: 500;
+    &:hover {
+      background-color: var(--accent);
+    }
+  }
+}
+
 .record__operate__input {
 
   display: flex;

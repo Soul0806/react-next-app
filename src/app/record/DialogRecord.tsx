@@ -75,7 +75,7 @@ const DialogRecord = ({ groupData, lastId }: { groupData: GroupData, lastId: str
         <>
             <Context.Provider value={{ groupData, lastId }}>
                 <div className="record__operate__insert">
-                    <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
+                    <button type="button" className="dialog__sale__open">
                         新增銷售
                     </button>
                 </div>
