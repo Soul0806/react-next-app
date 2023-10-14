@@ -1,7 +1,7 @@
 'use client'
 
 // React 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 // Client comp
 import DialogRecord from "../DialogRecord";
@@ -10,21 +10,54 @@ import Search from "./Search";
 // Type
 import type { GroupData } from "../DialogRecord";
 
+export type Record = {
+    [key: string]: string
+}
+
+type GroupRecord = {
+    [key: string]: Record[]
+}
+
 type Props = {
     groupData: GroupData,
-    lastId: string,
+    records: any[],
+}
+
+function groupRecord(records: Record[]) {
+    const group_record: GroupRecord = {};
+
+    records.map((item: Record) => {
+        const date = item.date;
+        if (group_record[date] == undefined) {
+            group_record[date] = [item];
+        } else {
+            group_record[date].push(item);
+        }
+    })
+
+    return group_record;
 }
 
 function Index(props: Props) {
-    const { groupData, lastId } = props;
 
+    const { groupData, records } = props;
+    const [filteredRecord, SetFilteredRecord] = useState<GroupRecord>({});
+    const [keys, setKeys] = useState<string[]>([]);
+    // const [group, setGroup] = useState<GroupData>({});
+
+    const lastId = records.at(-1).id;
     const refView = useRef<HTMLElement>(null);
 
-    function onchange() {
-        console.log('test');
-        if (refView.current) {
-            refView.current.innerHTML = '123';
-        }
+    function onchange(e: React.ChangeEvent<HTMLInputElement>) {
+        const search = e.target.value;
+        const result: any[] = records.filter(item => {
+            return item.spec.match(search) || item.note.match(search);
+        })
+
+        const group = groupRecord(result);
+        SetFilteredRecord(group);
+        setKeys(Object.keys(group).reverse());
+
     }
     return (
         // <div>123</div>
@@ -48,6 +81,20 @@ function Index(props: Props) {
                 </div>
                 {/* <input id="datepicker" /> */}
                 <section ref={refView} className="record__view">
+                    {keys.map((key, index) => (
+                        <>
+                            <div>{key}</div>
+                            <ul>
+                                <li>
+                                    {filteredRecord[key].map(item => (
+                                        <div key={item.id}>{item.spec}</div>
+                                    )
+                                    )}
+                                </li>
+                            </ul>
+                        </>
+                    ))
+                    }
                 </section>
                 {/* <section className="record__view">
                         <div className="record__overview__view">
