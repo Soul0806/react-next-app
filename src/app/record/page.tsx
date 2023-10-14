@@ -1,13 +1,10 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-
 import DialogRecord from './DialogRecord';
-import readLocalJson from './readLocalJson';
 
-import { queryData, table } from '@/utils/readData';
-import { create } from '@/utils/createData';
+// Client comp
 
-// import { GroupDataProvider } from './GroupDataProvider';
+import Search from './client/Search';
 
+import { FormText } from '@/components/form/FormText';
 type Spec = {
     [key: string]: string,
 }
@@ -15,17 +12,17 @@ type GroupData = {
     [key: string]: string[]
 }
 
-function writeToNewDb(specs: Spec[]) {
-    specs.map(async (item: Spec) => {
-        const format = item.format;
-        if (format.length > 6) {
-            let new_format = format.slice(0, 3) + '/' + format.slice(4, 6) + '-' + format.slice(-2);
-            await create(table.SPECIFICATION, { format: new_format });
-        } else {
-            await create(table.SPECIFICATION, { format: format });
-        }
-    })
-}
+// function writeToNewDb(specs: Spec[]) {
+//     specs.map(async (item: Spec) => {
+//         const format = item.format;
+//         if (format.length > 6) {
+//             let new_format = format.slice(0, 3) + '/' + format.slice(4, 6) + '-' + format.slice(-2);
+//             await create(table.SPECIFICATION, { format: new_format });
+//         } else {
+//             await create(table.SPECIFICATION, { format: format });
+//         }
+//     })
+// }
 
 function getGroupData(arr: Spec[]) {
     let groupData: any = {}
@@ -38,35 +35,24 @@ function getGroupData(arr: Spec[]) {
             groupData[inch].push(format);
         }
     })
-
     return groupData;
-}
-
-async function getServerSideProps(): Promise<Spec> {
-    const res = await fetch('http://localhost:9000');
-    return res.json();
 }
 
 export default async function Record() {
 
+    // const refSearch = useRef<HTMLInputElement>(null);
 
-    // const specs: any = await getServerSideProps();
-
-    const res_spec = await fetch('http://localhost:3000/api/specification', {cache: "no-store"});
+    const res_spec = await fetch('http://localhost:3000/api/specification', { cache: "no-store" });
     const specs = await res_spec.json();
     const groupData = getGroupData(specs);
 
-    const res_record = await fetch('http://localhost:3000/api/record', {cache: "no-store"});
+    const res_record = await fetch('http://localhost:3000/api/record', { cache: "no-store" });
     const records = await res_record.json();
     const record_last_id = records.at(-1).id;
 
 
-    if (false) {
-        const records = await readLocalJson('sale.json');
-        records.map(async (item: any) => {
-            // console.log(item);
-            await create('Record', item);
-        })
+    function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+        console.log(e.target.value);
     }
 
     return (
@@ -76,11 +62,12 @@ export default async function Record() {
                     <div className="record__sidebar">
                         <div className="record__operate">
                             <DialogRecord groupData={groupData} lastId={record_last_id} />
+                            <Search />
                             {/* <div className="record__operate__input">
-                                <input id="" type="text" ref={refSearch} onChange={handleSearch} />
-                                <svg class="feather feather-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /></svg>
-                            </div>
-                            <div className="record__operate__groupview" style={toggleGroupViewShow}>
+                                <input type="text" name="search" ref={refSearch} onChange={handleSearch} />
+                                <svg className="feather feather-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /></svg>
+                            </div> */}
+                            {/* <div className="record__operate__groupview" style={toggleGroupViewShow}>
                                 <div className="groupview__wrapper">
                                     <div className="groupview__menu">
                                         <svg className="groupview__close" style={toggleSearchClose} onClick={searchDelete} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">

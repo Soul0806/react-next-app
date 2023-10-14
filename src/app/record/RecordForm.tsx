@@ -3,8 +3,8 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 // import Router from "next/router";
 
-import FormSelect from '@/app/components/form/FormSelect';
-import FormRadio from '@/app/components/form/FormRadio';
+import FormSelect from '@/components/form/FormSelect';
+import FormRadio from '@/components/form/FormRadio';
 
 // From Data 
 import { inputRadioPay, inputRadioPlace, inputRadioPrice, inputRadioService } from './RecordFormData';
