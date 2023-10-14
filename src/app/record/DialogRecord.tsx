@@ -12,7 +12,8 @@ export type GroupData = {
 export const Context = createContext<GroupData | {}>({});
 // export const LastIdContext = createContext<string | null>(null);
 
-const DialogRecord = ({ groupData, lastId }: { groupData: GroupData, lastId: string }) => {
+const DialogRecord = ({ refView, groupData, lastId }: { refView: React.RefObject<HTMLElement>, groupData: GroupData, lastId: string }) => {
+    console.log(refView);
     // const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
