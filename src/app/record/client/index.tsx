@@ -19,14 +19,21 @@ function Index(props: Props) {
     const { groupData, lastId } = props;
 
     const refView = useRef<HTMLElement>(null);
+
+    function onchange() {
+        console.log('test');
+        if (refView.current) {
+            refView.current.innerHTML = '123';
+        }
+    }
     return (
         // <div>123</div>
         <div className="record">
             <div className="wrapper">
                 <div className="record__operate">
-                    <DialogRecord refView={refView} groupData={groupData} lastId={lastId} />
+                    <DialogRecord groupData={groupData} lastId={lastId} />
                     <div className="record__operate__input">
-                        <Search />
+                        <Search onchange={onchange} />
                     </div>
                     {/* <div className="record__operate__groupview" style={toggleGroupViewShow}>
                             <div className="groupview__wrapper">

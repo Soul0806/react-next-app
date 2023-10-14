@@ -4,7 +4,7 @@
 import DialogRecord from './DialogRecord';
 
 // Client comp
-import Index from './client';
+import Index from './client/Index';
 
 import Search from './client/Search';
 

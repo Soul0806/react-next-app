@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, createContext, useContext } from "react";
+import { useRef, useEffect, createContext, useContext, forwardRef } from "react";
 import RecordForm from "./RecordForm";
 import { Dom } from "@/lib/helper";
 
@@ -12,17 +12,16 @@ export type GroupData = {
 export const Context = createContext<GroupData | {}>({});
 // export const LastIdContext = createContext<string | null>(null);
 
-const DialogRecord = ({ refView, groupData, lastId }: { refView: React.RefObject<HTMLElement>, groupData: GroupData, lastId: string }) => {
-    console.log(refView);
+type Props = {
+    groupData: GroupData,
+    lastId: string,
+}
+
+const DialogRecord = ({ groupData, lastId }: Props) => {
     // const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
     const refDialogsRecord = useRef<HTMLDialogElement>(null);
-
-    // const context = {
-    //     groupData,
-    //     lastId
-    // }
 
     useEffect(() => {
         // document.getElementById('datepicker').innerHTML = "";

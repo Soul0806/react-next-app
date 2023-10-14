@@ -16,12 +16,10 @@ import React, { FC, forwardRef } from "react";
 type Props = {
     label?: string,
     onchange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    // ref?: any
 }
 
-const FormText: FC<Props> = (props) => {
+const FormText = (props: Props) => {
     const { label, onchange, ...inputs } = props;
-    // console.log(ref);
     return (
         <div className="form__group">
             <label>{label}
