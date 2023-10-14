@@ -59,27 +59,23 @@ export default async function Record() {
         <>
             <div className="record">
                 <div className="wrapper">
-                    <div className="record__sidebar">
-                        <div className="record__operate">
-                            <DialogRecord groupData={groupData} lastId={record_last_id} />
+                    <div className="record__operate">
+                        <DialogRecord groupData={groupData} lastId={record_last_id} />
+                        <div className="record__operate__input">
                             <Search />
-                            {/* <div className="record__operate__input">
-                                <input type="text" name="search" ref={refSearch} onChange={handleSearch} />
-                                <svg className="feather feather-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" /><line x1="21" x2="16.65" y1="21" y2="16.65" /></svg>
-                            </div> */}
-                            {/* <div className="record__operate__groupview" style={toggleGroupViewShow}>
-                                <div className="groupview__wrapper">
-                                    <div className="groupview__menu">
-                                        <svg className="groupview__close" style={toggleSearchClose} onClick={searchDelete} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">
-                                            <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path>
-                                        </svg>                                
-                                    </div>
-                                    <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
-                                </div>
-                            </div> */}
                         </div>
-                        {/* <input id="datepicker" /> */}
+                        {/* <div className="record__operate__groupview" style={toggleGroupViewShow}>
+                            <div className="groupview__wrapper">
+                                <div className="groupview__menu">
+                                    <svg className="groupview__close" style={toggleSearchClose} onClick={searchDelete} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">
+                                        <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path>
+                                    </svg>                                
+                                </div>
+                                <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
+                            </div>
+                        </div> */}
                     </div>
+                    {/* <input id="datepicker" /> */}
                     <section className="record__view">
                     </section>
                     {/* <section className="record__view">

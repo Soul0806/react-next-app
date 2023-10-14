@@ -14,7 +14,7 @@
   --fs-18: 1.125rem;
 
   --accent: hsl(240 4.8% 95.9%);
-  --border: hsl(240,5.9%,90%);
+  --border: hsl(240, 5.9%, 90%);
   --radius: .5rem;
 }
 
@@ -31,6 +31,7 @@ html {
 
 body {
   font-family: 'SF Pro Display', sans-serif;
+  font-size: 18px;
 
   h1,
   h2,
@@ -72,6 +73,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3rem;
+
+  font-size: 18px;
 }
 
 .wrapper {
@@ -194,67 +197,24 @@ dialog[open] {
 }
 
 .form__group {
-  // width: 10%;
-  position: relative;
-  padding: 15px 0 0;
 
-  &~span {
-    display: block;
-    padding: 10px 0 0;
+  position: relative;
+
+  svg {
+    position: relative;
+    right: 25px;
+    top: 3px;
   }
 
   .form__input {
-    width: 100%;
+    width: 10ch;
+
     outline: 0;
-    font-size: 1rem;
     border: 0;
     border-bottom: 2px solid gray;
     padding: 4px 0;
-    // background-color: transparent;
-    // background-color: red;
-
-    &~label {
-      display: block;
-      position: absolute;
-      font-size: 1rem;
-      transition: .2s;
-    }
-
-    &::placeholder {
-      color: transparent;
-    }
-
-    &:placeholder-shown {
-      &~label {
-        font-size: 1rem;
-        top: 18px;
-      }
-    }
-
-    &:focus {
-      &~label {
-        position: absolute;
-        top: 0;
-        display: block;
-        outline: 0;
-        font-size: .5rem;
-      }
-    }
   }
 }
-
-// .form__group {
-//   position: relative;
-
-//   label {
-//     position: absolute;
-//     top: 0;
-//   }
-// }
-
-// .form__input {
-//   width: 100%;
-// }
 
 // Notify 
 .notify__sucess {
@@ -263,79 +223,4 @@ dialog[open] {
   padding: 1rem 5rem;
   color: red;
   animation: notify 2s;
-}
-
-
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-
-.f-1 {
-  flex: 1;
-}
-
-.flex-1 {
-  flex: 1;
-}
-
-.f-g-1 {
-  flex-grow: 1;
-}
-
-.a-i-center {
-  align-items: center;
-}
-
-.a-i-start {
-  align-items: flex-start;
-}
-
-
-.j-c-end {
-  justify-content: flex-end;
-}
-
-.j-c-between {
-  justify-content: space-between;
-}
-
-.g-1 {
-  gap: 10px;
-}
-
-.d-sign {
-  &:before {
-    content: '$',
-  }
-}
-
-.abs {
-  position: absolute;
-}
-
-.rel {
-  position: relative;
-}
-
-.float-right {
-  float: right;
-}
-
-.r-0 {
-  right: 0;
-}
-
-.invalid {
-  color: var(--invalid);
-}
-
-.red {
-  background-color: rgb(243, 156, 156);
 }
