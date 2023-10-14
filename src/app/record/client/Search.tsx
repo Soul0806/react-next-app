@@ -9,9 +9,6 @@ function onchange(e: React.ChangeEvent<HTMLInputElement>) {
 }
 function Search() {
 
-    // const inputProps = {
-    //     onchange: (e: React.ChangeEvent<HTMLInputElement>) => void
-    // }
     return (
         <FormText onchange={onchange} />
     );

@@ -1,10 +1,13 @@
+// 'use client'
+
+// import { useRef } from 'react';
 import DialogRecord from './DialogRecord';
 
 // Client comp
 
 import Search from './client/Search';
 
-import { FormText } from '@/components/form/FormText';
+import FormText from '@/components/form/FormText';
 type Spec = {
     [key: string]: string,
 }
@@ -41,6 +44,10 @@ function getGroupData(arr: Spec[]) {
 export default async function Record() {
 
     // const refSearch = useRef<HTMLInputElement>(null);
+
+    // Ref
+
+    // const refView = useRef<HTMLElement>(null);
 
     const res_spec = await fetch('http://localhost:3000/api/specification', { cache: "no-store" });
     const specs = await res_spec.json();
