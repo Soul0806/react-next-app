@@ -43,21 +43,48 @@ function Index(props: Props) {
     const { groupData, records } = props;
     const [filteredRecord, SetFilteredRecord] = useState<GroupRecord>({});
     const [keys, setKeys] = useState<string[]>([]);
+
+    // Timeout id 
+    const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>[]>([]);
     // const [group, setGroup] = useState<GroupData>({});
 
     const lastId = records.at(-1).id;
     const refView = useRef<HTMLElement>(null);
 
     function onchange(e: React.ChangeEvent<HTMLInputElement>) {
+
+        // Clear timeout
+        timeoutId.map(item => {
+            clearTimeout(item);
+        })
+
+        // Remove element innerHTML
+        if (refView.current) {
+            refView.current.innerHTML = "";
+        }
+
+
         const search = e.target.value;
         const result: any[] = records.filter(item => {
             return item.spec.match(search) || item.note.match(search);
         })
 
         const group = groupRecord(result);
-        SetFilteredRecord(group);
-        setKeys(Object.keys(group).reverse());
+        const keys = Object.keys(group).reverse();
 
+        SetFilteredRecord(group);
+        setKeys(keys);
+
+        records.map((item, index) => {
+            const id = setTimeout(() => {
+                const div = document.createElement('div');
+                div.innerHTML = item.spec;
+                refView.current?.appendChild(div);
+                div.classList.toggle('record');
+            }, 20 * index)
+
+            setTimeoutId((prev) => [...prev, id]);
+        })
     }
     return (
         // <div>123</div>
@@ -81,7 +108,7 @@ function Index(props: Props) {
                 </div>
                 {/* <input id="datepicker" /> */}
                 <section ref={refView} className="record__view">
-                    {keys.map((key, index) => (
+                    {/* {keys.map((key, index) => (
                         <>
                             <div>{key}</div>
                             <ul>
@@ -94,7 +121,7 @@ function Index(props: Props) {
                             </ul>
                         </>
                     ))
-                    }
+                    } */}
                 </section>
                 {/* <section className="record__view">
                         <div className="record__overview__view">
