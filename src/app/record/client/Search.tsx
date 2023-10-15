@@ -1,6 +1,6 @@
 'use client'
 
-import FormText from "@/components/form/FormText";
+import Input from "@/components/form/Input";
 import React from "react";
 
 // function onchange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -14,7 +14,7 @@ type Props = {
 const Search = (props: Props) => {
     const { onchange } = props;
     return (
-        <FormText onchange={onchange} />
+        <Input onchange={onchange} />
     );
 }
 

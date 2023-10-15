@@ -27,6 +27,8 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -195,27 +197,6 @@ dialog[open] {
     font-style: normal;
   }
 }
-
-.form__group {
-
-  position: relative;
-
-  svg {
-    position: relative;
-    right: 25px;
-    top: 3px;
-  }
-
-  .form__input {
-    width: 10ch;
-
-    outline: 0;
-    border: 0;
-    border-bottom: 2px solid gray;
-    padding: 4px 0;
-  }
-}
-
 // Notify 
 .notify__sucess {
   position: absolute;
