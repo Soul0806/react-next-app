@@ -62,7 +62,7 @@ function Index(props: Props) {
         // if (refView.current) {
         //     refView.current.innerHTML = "";
         // }
-        if (refView.current) refView.current.innerHTML = "";
+        // if (refView.current) refView.current.innerHTML = "";
 
         const search = e.target.value;
         if (search != "") {
@@ -108,7 +108,7 @@ function Index(props: Props) {
                                     <ul>
                                         <li>
                                             {filteredRecord[key].map(item => (
-                                                <div key={item.id}>{item.spec}</div>
+                                                <div key={item.id}>{item.spec} -- {item.note}</div>
                                             )
                                             )}
                                         </li>
