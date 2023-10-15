@@ -49,42 +49,34 @@ function Index(props: Props) {
     // const [group, setGroup] = useState<GroupData>({});
 
     const lastId = records.at(-1).id;
-    const refView = useRef<HTMLElement>(null);
+    const refView = useRef<HTMLDivElement>(null);
 
     function onchange(e: React.ChangeEvent<HTMLInputElement>) {
 
         // Clear timeout
-        timeoutId.map(item => {
-            clearTimeout(item);
-        })
+        // timeoutId.map(item => {
+        //     clearTimeout(item);
+        // })
 
         // Remove element innerHTML
-        if (refView.current) {
-            refView.current.innerHTML = "";
-        }
-
+        // if (refView.current) {
+        //     refView.current.innerHTML = "";
+        // }
+        if (refView.current) refView.current.innerHTML = "";
 
         const search = e.target.value;
-        const result: any[] = records.filter(item => {
-            return item.spec.match(search) || item.note.match(search);
-        })
+        if (search != "") {
+            const result: any[] = records.filter(item => {
+                return item.spec.match(search) || item.note.match(search);
+            })
+            const group = groupRecord(result);
+            const keys = Object.keys(group).reverse();
 
-        const group = groupRecord(result);
-        const keys = Object.keys(group).reverse();
+            SetFilteredRecord(group);
+            setKeys(keys);
 
-        SetFilteredRecord(group);
-        setKeys(keys);
-
-        records.map((item, index) => {
-            const id = setTimeout(() => {
-                const div = document.createElement('div');
-                div.innerHTML = item.spec;
-                refView.current?.appendChild(div);
-                div.classList.toggle('record');
-            }, 20 * index)
-
-            setTimeoutId((prev) => [...prev, id]);
-        })
+            if (refView.current) refView.current.classList.toggle('record__view__records');
+        }
     }
     return (
         // <div>123</div>
@@ -107,21 +99,24 @@ function Index(props: Props) {
                         </div> */}
                 </div>
                 {/* <input id="datepicker" /> */}
-                <section ref={refView} className="record__view">
-                    {/* {keys.map((key, index) => (
-                        <>
-                            <div>{key}</div>
-                            <ul>
-                                <li>
-                                    {filteredRecord[key].map(item => (
-                                        <div key={item.id}>{item.spec}</div>
-                                    )
-                                    )}
-                                </li>
-                            </ul>
-                        </>
-                    ))
-                    } */}
+                <section className="record__view">
+                    <div ref={refView}>
+                        {
+                            keys.map((key, index) => (
+                                <>
+                                    <div>{key}</div>
+                                    <ul>
+                                        <li>
+                                            {filteredRecord[key].map(item => (
+                                                <div key={item.id}>{item.spec}</div>
+                                            )
+                                            )}
+                                        </li>
+                                    </ul>
+                                </>
+                            ))
+                        }
+                    </div>
                 </section>
                 {/* <section className="record__view">
                         <div className="record__overview__view">
@@ -135,8 +130,8 @@ function Index(props: Props) {
                             }
                         </div>
                     </section> */}
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 
