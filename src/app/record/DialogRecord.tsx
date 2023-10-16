@@ -6,6 +6,9 @@ import { Dom } from "@/lib/helper";
 
 import { queryData, table } from '@/utils/readData';
 
+// import css 
+import style from '@/styles/comps/dialog.module.css';
+
 export type GroupData = {
     [key: string]: string[]
 }
@@ -17,7 +20,7 @@ type Props = {
     lastId: string,
 }
 
-const DialogRecord = ({ groupData, lastId }: Props) => {
+export default function DialogRecord({ groupData, lastId }: Props) {
     // const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
@@ -46,31 +49,13 @@ const DialogRecord = ({ groupData, lastId }: Props) => {
                     }
                 }
             })
-
-            // Dom('.overlap').event('click', (e) => {
-            //     refSearch.current.value = '';
-            //     setSearchClose(false);
-            //     setGroupViewShow(false);
-            // });
-            // const picker = new AirDatepicker('#datepicker', {
-            //     navTitles: {
-            //         days: dt.getTodayDate()
-            //     },
-            //     locale: localeEn,
-            //     // inline: true,
-            //     buttons: [prevBtn, button, nextBtn],
-            //     onSelect: function ({ date, datepicker }) {
-            //         if (!date) return;
-            //         datepicker.nav.$title.innerHTML = date.toDate();
-            //         getDbSale(date.toDate()).then(({ id, sale: res }) => salesState.setDbSale(res))
-            //     },
-            // });
-
         }
         return () => {
             ref.current = true;
         }
     }, [])
+
+
     return (
         <>
             <Context.Provider value={{ groupData, lastId }}>
@@ -79,10 +64,10 @@ const DialogRecord = ({ groupData, lastId }: Props) => {
                         新增銷售
                     </button>
                 </div>
-                <dialog ref={refDialogsRecord}>
+                <dialog className={style["dialog"]} ref={refDialogsRecord}>
                     <div className="wrapper">
-                        <div className="dialog__menu">
-                            <h5 className="dialog__title">新增銷售</h5>
+                        <div className={style["dialog-menu"]}>
+                            <h5 className={style["dialog-title"]}>新增銷售</h5>
                             <span className="material-symbols-outlined dialog__close">
                                 Close
                             </span>
@@ -94,4 +79,3 @@ const DialogRecord = ({ groupData, lastId }: Props) => {
         </>
     )
 }
-export default DialogRecord;

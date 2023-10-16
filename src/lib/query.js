@@ -14,7 +14,6 @@ async function Db() {
 export async function query(querySql, values) {
 
   const db = await Db();
-  console.log(db);
   const [result] = await db.execute(querySql, values);
   db.end();
 

@@ -26,7 +26,6 @@ const FormText = (props: Props) => {
 
     // Use context 
     const { setKeys } = useContext(RecordContext);
-    console.log(setKeys);
 
     function clearInput() {
         if (refInput.current) {
@@ -36,12 +35,11 @@ const FormText = (props: Props) => {
     }
     return (
         <div className={style["input-wrapper"]}>
-            <label>{label}
+            <label className={style["input-labe"]}>{label}
                 <input ref={refInput} className={style["input-elem"]} onChange={onchange} {...inputs}
                 />
             </label>
             {!isEmpty(refInput?.current?.value) && <button onClick={clearInput} className={style["input-clear"]}>&times;</button>}
-
             <div className={style["input-underline"]}></div>
         </div>
     )

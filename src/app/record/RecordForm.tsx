@@ -26,6 +26,9 @@ import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
 
+// import css 
+import style from '@/styles/comps/dialog.module.css';
+
 const RECORD_API = `http://localhost:3000/api/record`;
 
 function RecordForm() {
@@ -152,91 +155,76 @@ function RecordForm() {
         }
     }
 
-    function handleClose() {
-        // setRecord({
-        //     place: '',
-        //     service: '',
-        //     inch: '',
-        //     spec: '',
-        //     price: '',
-        //     quantity: 1,
-        //     pay: '',
-        //     note: ''
-        // })
-    }
-
     return (
         <>
-            <div className="dialog__content">
-                <form className="dialog__form" autoComplete="off" method="post" onSubmit={handleSubmit}>
-                    <div id="datepicker__insert"></div>
-                    <div className="modal-place">
-                        {inputRadioPlace.map(radio => {
-                            return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                        })}
-                        {
-                            !record.place && <span className="invalid">請選擇地點</span>
-                        }
-                    </div>
-                    <div className="modal-service">
-                        {inputRadioService.map(radio => {
-                            return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                        })}
-                        {
-                            !record.service && <span className="invalid">請選擇服務</span>
-                        }
-                    </div>
-                    {record.service == 'tire-change' &&
-                        <div className="modal-tire" onChange={handleChange}>
-                            <div>規格</div>
-                            <div>
-                                <FormSelect name="inch" option={DEFAULT_INCH_RANGE} />
-                            </div>
-                            {record.inch != '' &&
-                                <div>
-                                    <FormSelect name="spec" option={format} />
-                                </div>
-                            }
-                        </div>
+            <form className={style["dialog-form"]} autoComplete="off" method="post" onSubmit={handleSubmit}>
+                <div id="datepicker__insert"></div>
+                <div className="modal-place">
+                    {inputRadioPlace.map(radio => {
+                        return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                    })}
+                    {
+                        !record.place && <span className="invalid">請選擇地點</span>
                     }
-                    {record.service == 'tire-change' &&
-                        <div className="modal-quantity" onChange={handleChange} >
-                            <div>數量</div>
-                            <div>
-                                <FormSelect name="quantity" option={_.range(1, 11)} />
-                            </div>
-                        </div>
+                </div>
+                <div className="modal-service">
+                    {inputRadioService.map(radio => {
+                        return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                    })}
+                    {
+                        !record.service && <span className="invalid">請選擇服務</span>
                     }
-                    <div className="modal-price input-icon">
-                        <input className="price" name="price" type="text" placeholder="0.0" value={record.price} onChange={handleChange} />
-                        <i>$</i>
-                        {/* {record.service == 'fix' &&
-                            <>
-                                {inputRadioPrice.map(radio => {
-                                    return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                                })}
-                            </>
-                        } */}
-                    </div>
-                    <div className="modal-pay">
-                        {inputRadioPay.map(radio => {
-                            return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                        })}
-                        {
-                            !record.pay && <span className="invalid">請選擇付款方式</span>
+                </div>
+                {record.service == 'tire-change' &&
+                    <div className="modal-tire" onChange={handleChange}>
+                        <div>規格</div>
+                        <div>
+                            <FormSelect name="inch" option={DEFAULT_INCH_RANGE} />
+                        </div>
+                        {record.inch != '' &&
+                            <div>
+                                <FormSelect name="spec" option={format} />
+                            </div>
                         }
                     </div>
-                    <div className="modal-note">
-                        <label className="note">備註
-                            <input name="note" type="text" onChange={handleChange} />
-                        </label>
+                }
+                {record.service == 'tire-change' &&
+                    <div className="modal-quantity" onChange={handleChange} >
+                        <div>數量</div>
+                        <div>
+                            <FormSelect name="quantity" option={_.range(1, 11)} />
+                        </div>
                     </div>
-                    <div className="modal-footer">
-                        {/* <button type="submit" style={formValidate} className="btn btn-primary">Send message</button> */}
-                        <button type="submit" ref={refSubmitButton} className="btn btn-primary">Send message</button>
-                    </div>
-                </form>
-            </div>
+                }
+                <div className="modal-price input-icon">
+                    <input className="price" name="price" type="text" placeholder="0.0" value={record.price} onChange={handleChange} />
+                    <i>$</i>
+                    {/* {record.service == 'fix' &&
+                        <>
+                            {inputRadioPrice.map(radio => {
+                                return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                            })}
+                        </>
+                    } */}
+                </div>
+                <div className="modal-pay">
+                    {inputRadioPay.map(radio => {
+                        return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                    })}
+                    {
+                        !record.pay && <span className="invalid">請選擇付款方式</span>
+                    }
+                </div>
+                <div className="modal-note">
+                    <label className="note">備註
+                        <input name="note" type="text" onChange={handleChange} />
+                    </label>
+                </div>
+                <div className="modal-footer">
+                    {/* <button type="submit" style={formValidate} className="btn btn-primary">Send message</button> */}
+                    <button type="submit" ref={refSubmitButton} className="btn btn-primary">Send message</button>
+                </div>
+            </form>
         </>
 
     )

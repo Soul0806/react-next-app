@@ -1,4 +1,4 @@
-import prisma from "@/utils/prismaClient"
+// import prisma from "@/utils/prismaClient"
 import { query } from '@/lib/query';
 
 function add_quote(arr: string[]) {

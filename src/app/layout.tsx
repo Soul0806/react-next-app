@@ -9,6 +9,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import scss
 import '@/styles/css/index.scss';
 
+// import css
+import '@/styles/index.css';
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {

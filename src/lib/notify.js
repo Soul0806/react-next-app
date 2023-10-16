@@ -9,7 +9,6 @@ export function notify(id, callback) {
     const container = document.querySelector('.container');
     const div = document.createElement('div');
     div.innerText = `新增成功 - No.${id}`;
-    console.log(callback);
     // Event binding
     event_animationEnd(div, callback);
 
