@@ -27,8 +27,8 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
-  padding: 0;
-  margin: 0;
+  // padding: 0;
+  // margin: 0;
 }
 
 body {
@@ -197,6 +197,7 @@ dialog[open] {
     font-style: normal;
   }
 }
+
 // Notify 
 .notify__sucess {
   position: absolute;

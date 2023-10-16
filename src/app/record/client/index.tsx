@@ -44,25 +44,21 @@ function Index(props: Props) {
     const [filteredRecord, SetFilteredRecord] = useState<GroupRecord>({});
     const [keys, setKeys] = useState<string[]>([]);
 
+    // const [t, tt] = useState([1, 2, 3, 4, 5]);
+
     // Timeout id 
-    const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>[]>([]);
-    // const [group, setGroup] = useState<GroupData>({});
+    // const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>[]>([]);
 
     const lastId = records.at(-1).id;
     const refView = useRef<HTMLDivElement>(null);
 
     function onchange(e: React.ChangeEvent<HTMLInputElement>) {
 
-        // Clear timeout
-        // timeoutId.map(item => {
-        //     clearTimeout(item);
-        // })
-
-        // Remove element innerHTML
-        // if (refView.current) {
-        //     refView.current.innerHTML = "";
-        // }
-        // if (refView.current) refView.current.innerHTML = "";
+        if (refView.current) {
+            refView.current.addEventListener('animationend', function () {
+                this.classList.remove('record__view__records');
+            })
+        }
 
         const search = e.target.value;
         if (search != "") {
@@ -71,11 +67,12 @@ function Index(props: Props) {
             })
             const group = groupRecord(result);
             const keys = Object.keys(group).reverse();
-
             SetFilteredRecord(group);
             setKeys(keys);
 
-            if (refView.current) refView.current.classList.toggle('record__view__records');
+            if (refView.current) {
+                refView.current.classList.add('record__view__records');
+            }
         }
     }
     return (
@@ -101,22 +98,20 @@ function Index(props: Props) {
                 {/* <input id="datepicker" /> */}
                 <section className="record__view">
                     <div ref={refView}>
-                        {
-                            keys.map((key, index) => (
-                                <>
-                                    <div>{key}</div>
-                                    <ul>
-                                        <li>
-                                            {filteredRecord[key].map(item => (
-                                                <div key={item.id}>{item.spec} -- {item.note}</div>
-                                            )
-                                            )}
+                        {keys.map((key, index) => (
+                            <div key={index}>
+                                <div>{key}</div>
+                                <ul>
+                                    {filteredRecord[key].map(item => (
+                                        <li key={item.id}>
+                                            <div>{item.spec} -- {item.note}</div>
                                         </li>
-                                    </ul>
-                                </>
-                            ))
-                        }
-                    </div>
+                                    )
+                                    )}
+                                </ul>
+                            </div>
+                        ))}
+                    </div >
                 </section>
                 {/* <section className="record__view">
                         <div className="record__overview__view">
