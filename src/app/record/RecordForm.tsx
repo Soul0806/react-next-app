@@ -132,11 +132,20 @@ function RecordForm() {
         e.preventDefault();
 
         const formData: FormData = new FormData(e.currentTarget);
-        let paylaod: Obj = {};
+        let payload: Obj = {};
 
         for (let [key, value] of formData) {
-            paylaod[key] = value;
+            payload[key] = value;
         }
+
+        console.log(payload);
+
+        // const result = await axi.post(RECORD_API, paylaod);
+
+        // console.log(result.data);
+
+
+        // console.log(paylaod);
 
 
         // for (let [key, value] of formData.entries()) {
@@ -160,7 +169,7 @@ function RecordForm() {
         //     date: record.date,
         //     createdAt: dt.getDateTime()
         // }
-        // const result = await axi.post(RECORD_API, payload);
+
 
         // if (!isEmpty(result.data)) {
         //     const id = result.data.insertId;
