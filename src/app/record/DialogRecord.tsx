@@ -67,7 +67,7 @@ export default function DialogRecord({ groupData, lastId }: Props) {
                                 Close
                             </span>
                         </div>
-                        <RecordForm />
+                        <RecordForm ref={refDialogsRecord}/>
                     </div>
                 </dialog>
             </Context.Provider>

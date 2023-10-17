@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext, useRef, forwardRef } from 'react';
 // import Router from "next/router";
 
 import FormSelect from '@/components/form/FormSelect';
@@ -34,44 +34,44 @@ type Obj = {
     [key: string]: string,
 }
 
-function RecordForm() {
+const RecordForm = forwardRef((props, ref) => {
     /*
     // const [inches] = useTire
     */
 
     // Default value 
-
     const DEFAULT_INCH: string = '12';
     const DEFAULT_INCH_RANGE = _.range(12, 23);
 
     // Context
     const { groupData, lastId }: any = useContext(Context)
 
-    // Ref
-    const ref = useRef(false);
-    const refDate = useRef(new Date());
-    const refForm = useRef<HTMLFormElement>(null);
-    const refPrice = useRef<HTMLInputElement>(null);
-    const refSubmitButton = useRef<HTMLButtonElement>(null);
-
-
     //  Router
 
     //  State 
     const [format, setFormat] = useState<string[]>([]);
+    const [btnBehave, setBtnBehave] = useState<string | null>(null);
     const [record, setRecord] = useState({
-        id: lastId + 1,
-        place: '',
+        // id: lastId + 1,
+        area: '',
         service: '',
         inch: DEFAULT_INCH,
-        spec: '',
+        // spec: '',
         price: '',
-        quantity: '',
+        // quantity: '',
         pay: '',
-        note: '',
-        date: dt.getTodayDate(),
+        // note: '',
+        // date: dt.getTodayDate(),
     });
+
     const [id, setId] = useState(lastId + 1);
+
+    // Ref
+    const ref1 = useRef(false);
+    const refDate = useRef(new Date());
+    const refForm = useRef<HTMLFormElement>(null);
+    const refPrice = useRef<HTMLInputElement>(null);
+    const refEmpty = useRef(record);
 
     let button = {
         content: 'Today',
@@ -85,7 +85,7 @@ function RecordForm() {
     }
 
     useEffect(() => {
-        if (ref.current) {
+        if (ref1.current) {
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -108,7 +108,7 @@ function RecordForm() {
             });
         }
         return () => {
-            ref.current = true;
+            ref1.current = true;
         }
     }, [])
 
@@ -133,19 +133,17 @@ function RecordForm() {
 
         e.preventDefault();
 
+        let payload: Obj = {};
         const formData: FormData = new FormData(e.currentTarget);
         formData.set('date', refDate.current.toDate());
         formData.set('createdAt', dt.getDateTime())
         formData.delete('inch');
 
-        let payload: Obj = {};
-
         for (let [key, value] of formData) {
             payload[key] = value;
         }
 
-        refForm.current.reset();
-        
+        console.log(payload);
         // const result = await axi.post(RECORD_API, payload);
 
         // if (!isEmpty(result.data)) {
@@ -153,7 +151,16 @@ function RecordForm() {
         //     notify(id, () => {
         //         setId(id + 1);
         //     });
-        // }
+
+
+        if (btnBehave == 'insert_close') {
+            ref.current.close();
+        }
+
+        refForm.current.reset();
+
+        setRecord(refEmpty.current);
+
     }
 
     return (
@@ -190,7 +197,7 @@ function RecordForm() {
                     </div>
                 }
                 {record.service == 'tire-change' &&
-                    <div className="modal-quantity" onChange={handleChange} >
+                    <div className="modal-quantity">
                         <div>數量</div>
                         <div>
                             <FormSelect name="quantity" option={_.range(1, 11)} />
@@ -198,7 +205,7 @@ function RecordForm() {
                     </div>
                 }
                 <div className="modal-price input-icon">
-                    <input className="price" name="price" type="text" placeholder="0.0" value={record.price} onChange={handleChange} />
+                    <input className="price" name="price" type="text" placeholder="0.0" onChange={handleChange} />
                     <i>$</i>
                     {/* {record.service == 'fix' &&
                         <>
@@ -207,6 +214,9 @@ function RecordForm() {
                             })}
                         </>
                     } */}
+                    {
+                        record.price == '' && <span className="dialog-form__invalid">請輸入價格</span>
+                    }
                 </div>
                 <div className="modal-pay">
                     {inputRadioPay.map(radio => {
@@ -222,12 +232,14 @@ function RecordForm() {
                     </label>
                 </div>
                 <div className="modal-footer">
-                    {/* <button type="submit" style={formValidate} className="btn btn-primary">Send message</button> */}
-                    <button type="submit" ref={refSubmitButton} className="btn btn-primary">Send message</button>
+                    <button type="submit" onClick={() => setBtnBehave('insert_next')} className="btn btn-primary">新增接續下筆</button>
+                    <button type="submit" onClick={() => setBtnBehave('insert_close')} className="btn btn-primary">新增單筆</button>
                 </div>
             </form>
         </>
 
     )
 }
+)
+
 export default RecordForm;

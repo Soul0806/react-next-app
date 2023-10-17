@@ -56,12 +56,9 @@ body {
     list-style-type: none;
   }
 
-  [type=radio] {
-    margin-inline: 3px;
-  }
-
   label {
     line-height: 1;
+    margin: 0;
   }
 }
 
@@ -171,7 +168,7 @@ body {
   .dialog-form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 1.5em;
 
     [class*="modal"] {
       display: flex;
@@ -194,6 +191,7 @@ body {
     }
 
     .dialog-form__invalid {
+      font-size: .8em;
       color: var(--invalid);
     }
   }
