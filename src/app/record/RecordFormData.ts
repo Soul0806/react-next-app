@@ -2,14 +2,14 @@ export const inputRadioPlace = [
     {
         id: "store",
         type: "radio",
-        name: "place",
+        name: "area",
         value: "store",
         label: "店內",
     },
     {
         id: "out-service",
         type: "radio",
-        name: "place",
+        name: "area",
         value: "out-service",
         label: "外出",
     }

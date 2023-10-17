@@ -85,7 +85,6 @@ function RecordForm() {
 
     useEffect(() => {
         if (ref.current) {
-
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -95,13 +94,15 @@ function RecordForm() {
                 buttons: [button],
                 onSelect: function ({ date, datepicker }) {
                     if (!date) return;
-                    datepicker.nav.$title.innerHTML = date.toDate();
-                    setRecord(prev => {
-                        return {
-                            ...prev,
-                            date: date.toDate(),
-                        }
-                    })
+                    // datepicker.nav.$title.innerHTML = date.toDate();
+                    refDate.current = date.toDate();
+                    console.log(refDate.current);
+                    // setRecord(prev => {
+                    //     return {
+                    //         ...prev,
+                    //         date: date.toDate(),
+                    //     }
+                    // })
                 },
             });
         }
@@ -132,15 +133,19 @@ function RecordForm() {
         e.preventDefault();
 
         const formData: FormData = new FormData(e.currentTarget);
+        formData.set('date', refDate.current);
+        formData.set('createdAt', dt.getDateTime())
         let payload: Obj = {};
 
         for (let [key, value] of formData) {
             payload[key] = value;
         }
 
+
+        const result = await axi.post(RECORD_API, payload);
+
         console.log(payload);
 
-        // const result = await axi.post(RECORD_API, paylaod);
 
         // console.log(result.data);
 
