@@ -31,6 +31,10 @@ import style from '@/styles/comps/dialog.module.css';
 
 const RECORD_API = `http://localhost:3000/api/record`;
 
+type Obj = {
+    [key: string]: string,
+}
+
 function RecordForm() {
     /*
     // const [inches] = useTire
@@ -123,41 +127,55 @@ function RecordForm() {
             }
         })
     }
-    async function handleSubmit(e: { preventDefault: () => void; }) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 
         e.preventDefault();
 
-        const submitButton = refSubmitButton.current;
-        if (submitButton) {
-            submitButton.disabled = true;
-        }
-        const payload = {
-            area: record.place,
-            service: record.service,
-            spec: record.spec,
-            price: record.price,
-            quantity: record.quantity,
-            pay: record.pay,
-            note: record.note,
-            date: record.date,
-            createdAt: dt.getDateTime()
-        }
-        const result = await axi.post(RECORD_API, payload);
+        const formData: FormData = new FormData(e.currentTarget);
+        let paylaod: Obj = {};
 
-        if (!isEmpty(result.data)) {
-            const id = result.data.insertId;
-            notify(id, () => {
-                if (submitButton) {
-                    submitButton.disabled = false;
-                }
-                setId(id + 1);
-            });
+        for (let [key, value] of formData) {
+            paylaod[key] = value;
         }
+
+
+        // for (let [key, value] of formData.entries()) {
+        //     console.log(key);
+        // }
+
+        // console.log(e.target, e.currentTarget, formData.entries());
+
+        // const submitButton = refSubmitButton.current;
+        // if (submitButton) {
+        //     submitButton.disabled = true;
+        // }
+        // const payload = {
+        //     area: record.place,
+        //     service: record.service,
+        //     spec: record.spec,
+        //     price: record.price,
+        //     quantity: record.quantity,
+        //     pay: record.pay,
+        //     note: record.note,
+        //     date: record.date,
+        //     createdAt: dt.getDateTime()
+        // }
+        // const result = await axi.post(RECORD_API, payload);
+
+        // if (!isEmpty(result.data)) {
+        //     const id = result.data.insertId;
+        //     notify(id, () => {
+        //         if (submitButton) {
+        //             submitButton.disabled = false;
+        //         }
+        //         setId(id + 1);
+        //     });
+        // }
     }
 
     return (
         <>
-            <form className={style["dialog-form"]} autoComplete="off" method="post" onSubmit={handleSubmit}>
+            <form method="post" onSubmit={handleSubmit} className="dialog-form" autoComplete="off">
                 <div id="datepicker__insert"></div>
                 <div className="modal-place">
                     {inputRadioPlace.map(radio => {

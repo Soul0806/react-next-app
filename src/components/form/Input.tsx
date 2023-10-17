@@ -10,7 +10,7 @@ import { RecordContext } from "@/app/record/client/Index";
 import { isEmpty } from "lodash";
 
 // Css 
-import style from '@/styles/comps/form.module.css';
+// import style from '@/styles/comps/form.module.css';
 
 type Props = {
     label?: string,
@@ -26,7 +26,7 @@ const FormText = (props: Props) => {
 
     // Use context 
     const { setKeys } = useContext(RecordContext);
-
+    // 
     function clearInput() {
         if (refInput.current) {
             refInput.current.value = "";
@@ -34,13 +34,13 @@ const FormText = (props: Props) => {
         setKeys([]);
     }
     return (
-        <div className={style["input-wrapper"]}>
-            <label className={style["input-labe"]}>{label}
-                <input ref={refInput} className={style["input-elem"]} onChange={onchange} {...inputs}
+        <div className="input-wrapper">
+            <label className="input-labe">{label}
+                <input ref={refInput} className="input-elem" onChange={onchange} {...inputs}
                 />
             </label>
-            {!isEmpty(refInput?.current?.value) && <button onClick={clearInput} className={style["input-clear"]}>&times;</button>}
-            <div className={style["input-underline"]}></div>
+            {!isEmpty(refInput?.current?.value) && <button onClick={clearInput} className="input-clear">&times;</button>}
+            <div className="input-underline"></div>
         </div>
     )
 }

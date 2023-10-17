@@ -4,11 +4,6 @@ import { useRef, useEffect, createContext, useContext, forwardRef } from "react"
 import RecordForm from "./RecordForm";
 import { Dom } from "@/lib/helper";
 
-import { queryData, table } from '@/utils/readData';
-
-// import css 
-import style from '@/styles/comps/dialog.module.css';
-
 export type GroupData = {
     [key: string]: string[]
 }
@@ -64,10 +59,10 @@ export default function DialogRecord({ groupData, lastId }: Props) {
                         新增銷售
                     </button>
                 </div>
-                <dialog className={style["dialog"]} ref={refDialogsRecord}>
+                <dialog className="dialog" ref={refDialogsRecord}>
                     <div className="wrapper">
-                        <div className={style["dialog-menu"]}>
-                            <h5 className={style["dialog-title"]}>新增銷售</h5>
+                        <div className="dialog-menu">
+                            <h5 className="dialog-title">新增銷售</h5>
                             <span className="material-symbols-outlined dialog__close">
                                 Close
                             </span>
