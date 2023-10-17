@@ -27,7 +27,6 @@ import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
 
 // import css 
-import style from '@/styles/comps/dialog.module.css';
 
 const RECORD_API = `http://localhost:3000/api/record`;
 
@@ -51,8 +50,10 @@ function RecordForm() {
     // Ref
     const ref = useRef(false);
     const refDate = useRef(new Date());
+    const refForm = useRef<HTMLFormElement>(null);
     const refPrice = useRef<HTMLInputElement>(null);
     const refSubmitButton = useRef<HTMLButtonElement>(null);
+
 
     //  Router
 
@@ -95,7 +96,7 @@ function RecordForm() {
                 onSelect: function ({ date, datepicker }) {
                     if (!date) return;
                     // datepicker.nav.$title.innerHTML = date.toDate();
-                    refDate.current = date.toDate();
+                    refDate.current = date;
                     console.log(refDate.current);
                     // setRecord(prev => {
                     //     return {
@@ -133,55 +134,23 @@ function RecordForm() {
         e.preventDefault();
 
         const formData: FormData = new FormData(e.currentTarget);
-        formData.set('date', refDate.current);
+        formData.set('date', refDate.current.toDate());
         formData.set('createdAt', dt.getDateTime())
+        formData.delete('inch');
+
         let payload: Obj = {};
 
         for (let [key, value] of formData) {
             payload[key] = value;
         }
 
-
-        const result = await axi.post(RECORD_API, payload);
-
-        console.log(payload);
-
-
-        // console.log(result.data);
-
-
-        // console.log(paylaod);
-
-
-        // for (let [key, value] of formData.entries()) {
-        //     console.log(key);
-        // }
-
-        // console.log(e.target, e.currentTarget, formData.entries());
-
-        // const submitButton = refSubmitButton.current;
-        // if (submitButton) {
-        //     submitButton.disabled = true;
-        // }
-        // const payload = {
-        //     area: record.place,
-        //     service: record.service,
-        //     spec: record.spec,
-        //     price: record.price,
-        //     quantity: record.quantity,
-        //     pay: record.pay,
-        //     note: record.note,
-        //     date: record.date,
-        //     createdAt: dt.getDateTime()
-        // }
-
+        refForm.current.reset();
+        
+        // const result = await axi.post(RECORD_API, payload);
 
         // if (!isEmpty(result.data)) {
         //     const id = result.data.insertId;
         //     notify(id, () => {
-        //         if (submitButton) {
-        //             submitButton.disabled = false;
-        //         }
         //         setId(id + 1);
         //     });
         // }
@@ -189,14 +158,14 @@ function RecordForm() {
 
     return (
         <>
-            <form method="post" onSubmit={handleSubmit} className="dialog-form" autoComplete="off">
+            <form method="post" onSubmit={handleSubmit} ref={refForm} className="dialog-form" autoComplete="off">
                 <div id="datepicker__insert"></div>
                 <div className="modal-place">
                     {inputRadioPlace.map(radio => {
                         return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                     })}
                     {
-                        !record.place && <span className="invalid">請選擇地點</span>
+                        !record.area && <span className="dialog-form__invalid">請選擇地點</span>
                     }
                 </div>
                 <div className="modal-service">
@@ -204,7 +173,7 @@ function RecordForm() {
                         return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                     })}
                     {
-                        !record.service && <span className="invalid">請選擇服務</span>
+                        !record.service && <span className="dialog-form__invalid">請選擇服務</span>
                     }
                 </div>
                 {record.service == 'tire-change' &&
@@ -244,7 +213,7 @@ function RecordForm() {
                         return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                     })}
                     {
-                        !record.pay && <span className="invalid">請選擇付款方式</span>
+                        !record.pay && <span className="dialog-form__invalid">請選擇付款方式</span>
                     }
                 </div>
                 <div className="modal-note">
