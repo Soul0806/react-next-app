@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, createContext, useContext, forwardRef } from "react";
+import { useRef, useEffect, createContext, useContext, forwardRef, RefObject } from "react";
 import RecordForm from "./RecordForm";
 import { Dom } from "@/lib/helper";
 
@@ -15,11 +15,13 @@ type Props = {
     lastId: string,
 }
 
+
+
 export default function DialogRecord({ groupData, lastId }: Props) {
     // const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
-    const refDialogsRecord = useRef<HTMLDialogElement>(null);
+    const refDialogsRecord = useRef(null);
 
     useEffect(() => {
         // document.getElementById('datepicker').innerHTML = "";

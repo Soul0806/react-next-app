@@ -17,7 +17,6 @@ import { dt } from '../../lib/helper';
 import { axi } from '@/lib/axios';
 import { notify } from '@/lib/notify';
 
-
 // Third Party
 import _, { isEmpty } from 'lodash'
 
@@ -31,7 +30,7 @@ import 'air-datepicker/air-datepicker.css';
 const RECORD_API = `http://localhost:3000/api/record`;
 
 type Obj = {
-    [key: string]: string,
+    [key: string]: FormDataEntryValue,
 }
 
 const RecordForm = forwardRef((props, ref) => {
@@ -68,7 +67,7 @@ const RecordForm = forwardRef((props, ref) => {
 
     // Ref
     const ref1 = useRef(false);
-    const refDate = useRef(new Date());
+    const refDate = useRef<Date | Date[]>(new Date());
     const refForm = useRef<HTMLFormElement>(null);
     const refPrice = useRef<HTMLInputElement>(null);
     const refEmpty = useRef(record);
@@ -95,15 +94,8 @@ const RecordForm = forwardRef((props, ref) => {
                 buttons: [button],
                 onSelect: function ({ date, datepicker }) {
                     if (!date) return;
-                    // datepicker.nav.$title.innerHTML = date.toDate();
+                    datepicker.nav.$title.innerHTML = date.toLocaleString().split(' ')[0];
                     refDate.current = date;
-                    console.log(refDate.current);
-                    // setRecord(prev => {
-                    //     return {
-                    //         ...prev,
-                    //         date: date.toDate(),
-                    //     }
-                    // })
                 },
             });
         }
@@ -135,7 +127,7 @@ const RecordForm = forwardRef((props, ref) => {
 
         let payload: Obj = {};
         const formData: FormData = new FormData(e.currentTarget);
-        formData.set('date', refDate.current.toDate());
+        formData.set('date', refDate.current.toLocaleString().split(' ')[0]);
         formData.set('createdAt', dt.getDateTime())
         formData.delete('inch');
 
@@ -154,6 +146,7 @@ const RecordForm = forwardRef((props, ref) => {
 
 
         if (btnBehave == 'insert_close') {
+            console.log(ref);
             ref.current.close();
         }
 
