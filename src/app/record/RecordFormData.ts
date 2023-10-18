@@ -79,3 +79,8 @@ export const inputRadioPay = [
         label: "轉帳",
     }
 ]
+
+export const inputTextSpec = {
+    label: '新增',
+    className: 'input-elem',
+}

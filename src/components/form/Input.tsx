@@ -15,7 +15,7 @@ import { isEmpty } from "lodash";
 type Props = {
     label?: string,
     placeholder?: string,
-    onchange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
 const FormText = (props: Props) => {

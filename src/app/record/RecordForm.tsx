@@ -5,9 +5,10 @@ import { useEffect, useState, useContext, useRef, forwardRef } from 'react';
 
 import FormSelect from '@/components/form/FormSelect';
 import FormRadio from '@/components/form/FormRadio';
+import Input from '@/components/form/Input';
 
 // From Data 
-import { inputRadioPay, inputRadioPlace, inputRadioPrice, inputRadioService } from './RecordFormData';
+import { inputRadioPay, inputRadioPlace, inputRadioPrice, inputRadioService, inputTextSpec } from './RecordFormData';
 
 // Context
 import { Context } from './DialogRecord';
@@ -146,7 +147,6 @@ const RecordForm = forwardRef((props, ref) => {
 
 
         if (btnBehave == 'insert_close') {
-            console.log(ref);
             ref.current.close();
         }
 
@@ -187,6 +187,7 @@ const RecordForm = forwardRef((props, ref) => {
                                 <FormSelect name="spec" option={format} />
                             </div>
                         }
+                        <Input {...inputTextSpec} />
                     </div>
                 }
                 {record.service == 'tire-change' &&
