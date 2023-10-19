@@ -90,7 +90,15 @@ const RecordForm = forwardRef((props, ref) => {
         if (ref1.current) {
             refDialogClose.current?.addEventListener('click', function() {
                 refDialogInsert.current.close();
-                document.querySelector('[value="17"]').setAttribute('selected', 'selected');
+                setRecord(prev => {
+                    return {
+                        ...prev,
+                        inch: '17',
+                    }
+                })
+                const selects =  document.querySelectorAll('select');
+                console.log(selects[1], selects[1].querySelector('[value="215-55/17"]'));
+                selects[0].querySelector('[value="17"]').setAttribute('selected', 'selected');   
                 // document.querySelector('[value="17"]').setAttribute('selected', 'selected');
                 
             })
