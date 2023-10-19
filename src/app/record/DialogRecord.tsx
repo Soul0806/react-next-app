@@ -18,19 +18,21 @@ type Props = {
 
 
 export default function DialogRecord({ groupData, lastId }: Props) {
-    // const refSearch = useRef('');
-    const ref = useRef(false);
+
+    // Ref 
+    const ref = useRef<boolean>(false);
     const refDate = useRef(new Date());
-    const refDialogsRecord = useRef(null);
+    const refDialogClose = useRef<HTMLSpanElement | null>(null);
+    const refDialogsRecord = useRef<HTMLDialogElement>(null);
 
     useEffect(() => {
         // document.getElementById('datepicker').innerHTML = "";
 
         if (ref.current) {
-            Dom('.dialog__sale__open').event('click', () => {
+            Dom('.dialog-sale__open').event('click', () => {
                 refDialogsRecord?.current?.showModal();
             })
-            Dom('.dialog__close').event('click', () => {
+            refDialogClose.current?.addEventListener('click', () => {
                 refDialogsRecord?.current?.close();
             })
             Dom(refDialogsRecord?.current).event('click', (e: React.MouseEvent<HTMLElement>) => {
@@ -57,7 +59,7 @@ export default function DialogRecord({ groupData, lastId }: Props) {
         <>
             <Context.Provider value={{ groupData, lastId }}>
                 <div className="record__operate__insert">
-                    <button type="button" className="dialog__sale__open">
+                    <button type="button" className="dialog-sale__open">
                         新增銷售
                     </button>
                 </div>
@@ -65,7 +67,7 @@ export default function DialogRecord({ groupData, lastId }: Props) {
                     <div className="wrapper">
                         <div className="dialog-menu">
                             <h5 className="dialog-title">新增銷售</h5>
-                            <span className="material-symbols-outlined dialog__close">
+                            <span ref={refDialogClose} className="material-symbols-outlined dialog-close">
                                 Close
                             </span>
                         </div>

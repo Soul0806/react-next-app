@@ -70,7 +70,8 @@ const RecordForm = forwardRef((props, ref) => {
     const ref1 = useRef(false);
     const refDate = useRef<Date | Date[]>(new Date());
     const refForm = useRef<HTMLFormElement>(null);
-    const refInsertDialog = useRef<HTMLDialogElement>(null);
+    const refDialogInsert = useRef<HTMLDialogElement>(null);
+    const refDialogClose = useRef<HTMLSpanElement>(null);
     const refPrice = useRef<HTMLInputElement>(null);
     const refEmpty = useRef(record);
 
@@ -87,6 +88,13 @@ const RecordForm = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (ref1.current) {
+            refDialogClose.current?.addEventListener('click', function() {
+                refDialogInsert.current.close();
+                document.querySelector('[value="17"]').setAttribute('selected', 'selected');
+                // document.querySelector('[value="17"]').setAttribute('selected', 'selected');
+                
+            })
+            console.log(record);
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -116,8 +124,8 @@ const RecordForm = forwardRef((props, ref) => {
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
        if(e.target.value == 'new') {
-        if(refInsertDialog.current) {
-            refInsertDialog.current.showModal();
+        if(refDialogInsert.current) {
+            refDialogInsert.current.showModal();
         }
        }
         const { name, value } = e.target;
@@ -168,9 +176,11 @@ const RecordForm = forwardRef((props, ref) => {
     return (
         <>  
             <form method="post" onSubmit={handleSubmit} ref={refForm} className="dialog-form" autoComplete="off">
-                <dialog style={{width: '20%'}} className="dialog" ref={refInsertDialog}>
+                <dialog style={{width: '20%'}} className="dialog" ref={refDialogInsert}>
                     <div className="wrapper">
-                    <div className="dialog-menu"><h5 className="dialog-title">新增</h5><span className="material-symbols-outlined dialog__close">Close</span></div>
+                    <div className="dialog-menu">
+                        <h5 className="dialog-title">新增</h5>
+                        <span ref={refDialogClose} className="material-symbols-outlined dialog-close">Close</span></div>
                     </div>
                    
                 </dialog>
