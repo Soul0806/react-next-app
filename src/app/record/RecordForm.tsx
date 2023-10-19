@@ -70,6 +70,7 @@ const RecordForm = forwardRef((props, ref) => {
     const ref1 = useRef(false);
     const refDate = useRef<Date | Date[]>(new Date());
     const refForm = useRef<HTMLFormElement>(null);
+    const refInsertDialog = useRef<HTMLDialogElement>(null);
     const refPrice = useRef<HTMLInputElement>(null);
     const refEmpty = useRef(record);
 
@@ -114,6 +115,11 @@ const RecordForm = forwardRef((props, ref) => {
     }, [record.inch])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+       if(e.target.value == 'new') {
+        if(refInsertDialog.current) {
+            refInsertDialog.current.showModal();
+        }
+       }
         const { name, value } = e.target;
         setRecord(prev => {
             return {
@@ -156,9 +162,18 @@ const RecordForm = forwardRef((props, ref) => {
 
     }
 
+    function insertSpec() {
+    }
+
     return (
-        <>
+        <>  
             <form method="post" onSubmit={handleSubmit} ref={refForm} className="dialog-form" autoComplete="off">
+                <dialog style={{width: '20%'}} className="dialog" ref={refInsertDialog}>
+                    <div className="wrapper">
+                    <div className="dialog-menu"><h5 className="dialog-title">新增</h5><span className="material-symbols-outlined dialog__close">Close</span></div>
+                    </div>
+                   
+                </dialog>
                 <div id="datepicker__insert"></div>
                 <div className="modal-place">
                     {inputRadioPlace.map(radio => {
@@ -179,15 +194,14 @@ const RecordForm = forwardRef((props, ref) => {
                 {record.service == 'tire-change' &&
                     <div className="modal-tire" onChange={handleChange}>
                         <div>規格</div>
-                        <div>
+                        <div> 
                             <FormSelect name="inch" option={DEFAULT_INCH_RANGE} />
-                        </div>
+                        </div> 
                         {record.inch != '' &&
                             <div>
-                                <FormSelect name="spec" option={format} />
-                            </div>
+                                <FormSelect name="spec" optgroup={true} option={format} />
+                            </div>                            
                         }
-                        <Input {...inputTextSpec} />
                     </div>
                 }
                 {record.service == 'tire-change' &&

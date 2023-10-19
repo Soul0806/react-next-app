@@ -16,10 +16,12 @@ type Props = {
     label?: string,
     placeholder?: string,
     onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onclick?: (e: React.MouseEvent<HTMLInputElement>) => void,
 }
 
 const FormText = (props: Props) => {
-    const { label, onchange, ...inputs } = props;
+    const { label, onchange, onclick, ...inputs } = props;
+    console.log(onclick);
 
     // ref 
     const refInput = useRef<HTMLInputElement>(null);
@@ -39,7 +41,16 @@ const FormText = (props: Props) => {
                 <input ref={refInput} className="input-elem" onChange={onchange} {...inputs}
                 />
             </label>
-            {!isEmpty(refInput?.current?.value) && <button onClick={clearInput} className="input-clear">&times;</button>}
+            {!isEmpty(refInput?.current?.value) &&
+                <>
+                    <button onClick={clearInput} className="input-clear">&times;</button>
+                    <>
+                        {
+                            onclick != undefined && <button>確認</button>
+                        }
+                    </>
+                </>
+            }
             <div className="input-underline"></div>
         </div>
     )
