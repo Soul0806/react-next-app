@@ -15,13 +15,13 @@ import { isEmpty } from "lodash";
 type Props = {
     label?: string,
     placeholder?: string,
+    insertBtn?: any,
     onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     onclick?: (e: React.MouseEvent<HTMLInputElement>) => void,
 }
 
 const FormText = (props: Props) => {
-    const { label, onchange, onclick, ...inputs } = props;
-    console.log(onclick);
+    const { label, insertBtn, onchange, onclick, ...inputs } = props;
 
     // ref 
     const refInput = useRef<HTMLInputElement>(null);
@@ -51,7 +51,10 @@ const FormText = (props: Props) => {
                     </>
                 </>
             }
-            <div className="input-underline"></div>
+            {insertBtn &&
+                <div onClick={insertBtn.onclick}>{insertBtn.name}</div>
+            }
+            {/* <div className="input-underline"></div> */}
         </div>
     )
 }

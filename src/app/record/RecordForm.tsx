@@ -88,7 +88,7 @@ const RecordForm = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (ref1.current) {
-            refDialogClose.current?.addEventListener('click', function() {
+            refDialogClose.current?.addEventListener('click', function () {
                 refDialogInsert.current.close();
                 setRecord(prev => {
                     return {
@@ -96,11 +96,11 @@ const RecordForm = forwardRef((props, ref) => {
                         inch: '17',
                     }
                 })
-                const selects =  document.querySelectorAll('select');
+                const selects = document.querySelectorAll('select');
                 console.log(selects[1], selects[1].querySelector('[value="215-55/17"]'));
-                selects[0].querySelector('[value="17"]').setAttribute('selected', 'selected');   
+                selects[0].querySelector('[value="17"]').setAttribute('selected', 'selected');
                 // document.querySelector('[value="17"]').setAttribute('selected', 'selected');
-                
+
             })
             console.log(record);
             const picker = new AirDatepicker('#datepicker__insert', {
@@ -131,11 +131,11 @@ const RecordForm = forwardRef((props, ref) => {
     }, [record.inch])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-       if(e.target.value == 'new') {
-        if(refDialogInsert.current) {
-            refDialogInsert.current.showModal();
+        if (e.target.value == 'new') {
+            if (refDialogInsert.current) {
+                refDialogInsert.current.showModal();
+            }
         }
-       }
         const { name, value } = e.target;
         setRecord(prev => {
             return {
@@ -178,19 +178,28 @@ const RecordForm = forwardRef((props, ref) => {
 
     }
 
-    function insertSpec() {
+    const insertBtn = {
+        name: '新增',
+        onclick: (e: React.FormEvent<HTMLFormElement>) => {
+            const value = e.target.value;
+            const inch = value.slice(-2);
+            // console.log(value);
+            // const selects = document.querySelector('select');
+            // selects[0].querySelector(`value="${inch}"`)?.setAttribute('selected', 'selected');
+        },
     }
-
     return (
-        <>  
+        <>
             <form method="post" onSubmit={handleSubmit} ref={refForm} className="dialog-form" autoComplete="off">
-                <dialog style={{width: '20%'}} className="dialog" ref={refDialogInsert}>
+                <dialog style={{ width: '30%' }} className="dialog" ref={refDialogInsert}>
                     <div className="wrapper">
-                    <div className="dialog-menu">
-                        <h5 className="dialog-title">新增</h5>
-                        <span ref={refDialogClose} className="material-symbols-outlined dialog-close">Close</span></div>
+                        <div className="dialog-menu">
+                            <h5 className="dialog-title">新增項目</h5>
+                            <span ref={refDialogClose} className="material-symbols-outlined dialog-close">Close</span></div>
                     </div>
-                   
+                    <div className="dialog-form">
+                        <Input insertBtn={insertBtn} />
+                    </div>
                 </dialog>
                 <div id="datepicker__insert"></div>
                 <div className="modal-place">
@@ -212,13 +221,13 @@ const RecordForm = forwardRef((props, ref) => {
                 {record.service == 'tire-change' &&
                     <div className="modal-tire" onChange={handleChange}>
                         <div>規格</div>
-                        <div> 
+                        <div>
                             <FormSelect name="inch" option={DEFAULT_INCH_RANGE} />
-                        </div> 
+                        </div>
                         {record.inch != '' &&
                             <div>
                                 <FormSelect name="spec" optgroup={true} option={format} />
-                            </div>                            
+                            </div>
                         }
                     </div>
                 }

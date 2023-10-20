@@ -105,6 +105,8 @@ body {
 }
 
 .input-wrapper {
+  display: flex;
+
   .input-label {
     margin: 0;
   }
@@ -188,7 +190,7 @@ body {
     [type="submit"] {
       flex: 1;
     }
-    
+
     .price {
       width: 6em;
     }
