@@ -182,11 +182,16 @@ const RecordForm = forwardRef((props, ref) => {
         name: '新增',
         onclick: (e: React.FormEvent<HTMLFormElement>) => {
             const value = e.target.value;
-            const inch = value.slice(-2);
-            // console.log(value);
+            console.log(e.target, value);
+            // const inch = value.slice(-2);
+            // console.log(e, value);
             // const selects = document.querySelector('select');
             // selects[0].querySelector(`value="${inch}"`)?.setAttribute('selected', 'selected');
         },
+    }
+
+    function test(e: React.FormEvent<HTMLFormElement>) {
+        console.log(123);
     }
     return (
         <>

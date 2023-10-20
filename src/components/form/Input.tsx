@@ -52,7 +52,7 @@ const FormText = (props: Props) => {
                 </>
             }
             {insertBtn &&
-                <div onClick={insertBtn.onclick}>{insertBtn.name}</div>
+                <button>{insertBtn.name}</button>
             }
             {/* <div className="input-underline"></div> */}
         </div>
