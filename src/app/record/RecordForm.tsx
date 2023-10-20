@@ -69,9 +69,12 @@ const RecordForm = forwardRef((props, ref) => {
     // Ref
     const ref1 = useRef(false);
     const refDate = useRef<Date | Date[]>(new Date());
+
     const refForm = useRef<HTMLFormElement>(null);
     const refDialogInsert = useRef<HTMLDialogElement>(null);
     const refDialogClose = useRef<HTMLSpanElement>(null);
+    const refInput = useRef<HTMLInputElement>(null);
+
     const refPrice = useRef<HTMLInputElement>(null);
     const refEmpty = useRef(record);
 
@@ -102,7 +105,6 @@ const RecordForm = forwardRef((props, ref) => {
                 // document.querySelector('[value="17"]').setAttribute('selected', 'selected');
 
             })
-            console.log(record);
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -157,8 +159,6 @@ const RecordForm = forwardRef((props, ref) => {
         for (let [key, value] of formData) {
             payload[key] = value;
         }
-
-        console.log(payload);
         // const result = await axi.post(RECORD_API, payload);
 
         // if (!isEmpty(result.data)) {
@@ -166,7 +166,6 @@ const RecordForm = forwardRef((props, ref) => {
         //     notify(id, () => {
         //         setId(id + 1);
         //     });
-
 
         if (btnBehave == 'insert_close') {
             ref.current.close();
@@ -181,17 +180,18 @@ const RecordForm = forwardRef((props, ref) => {
     const insertBtn = {
         name: '新增',
         onclick: (e: React.FormEvent<HTMLFormElement>) => {
-            const value = e.target.value;
-            console.log(e.target, value);
-            // const inch = value.slice(-2);
-            // console.log(e, value);
-            // const selects = document.querySelector('select');
-            // selects[0].querySelector(`value="${inch}"`)?.setAttribute('selected', 'selected');
-        },
-    }
+            const value = refInput?.current?.value
+            const inch = value?.slice(-2);
 
-    function test(e: React.FormEvent<HTMLFormElement>) {
-        console.log(123);
+            document.querySelector(`[value="${inch}"]`)?.setAttribute('selected', 'selected');
+            setRecord((prev): any => {
+                return {
+                    ...prev,
+                    inch: inch
+                }
+            })
+            refDialogInsert?.current?.close();
+        },
     }
     return (
         <>
@@ -203,7 +203,7 @@ const RecordForm = forwardRef((props, ref) => {
                             <span ref={refDialogClose} className="material-symbols-outlined dialog-close">Close</span></div>
                     </div>
                     <div className="dialog-form">
-                        <Input insertBtn={insertBtn} />
+                        <Input ref={refInput} insertBtn={insertBtn} />
                     </div>
                 </dialog>
                 <div id="datepicker__insert"></div>

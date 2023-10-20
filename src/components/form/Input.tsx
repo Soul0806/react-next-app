@@ -20,7 +20,7 @@ type Props = {
     onclick?: (e: React.MouseEvent<HTMLInputElement>) => void,
 }
 
-const FormText = (props: Props) => {
+const Input = forwardRef((props: Props, ref: any) => {
     const { label, insertBtn, onchange, onclick, ...inputs } = props;
 
     // ref 
@@ -30,18 +30,18 @@ const FormText = (props: Props) => {
     const { setKeys } = useContext(RecordContext);
     // 
     function clearInput() {
-        if (refInput.current) {
-            refInput.current.value = "";
+        if (ref.current) {
+            ref.current.value = "";
         }
         setKeys([]);
     }
     return (
         <div className="input-wrapper">
-            <label className="input-labe">{label}
-                <input ref={refInput} className="input-elem" onChange={onchange} {...inputs}
+            <label className="input-label">{label}
+                <input ref={ref} className="input-elem" onChange={onchange} {...inputs}
                 />
             </label>
-            {!isEmpty(refInput?.current?.value) &&
+            {!isEmpty(ref?.current?.value) &&
                 <>
                     <button onClick={clearInput} className="input-clear">&times;</button>
                     <>
@@ -52,11 +52,12 @@ const FormText = (props: Props) => {
                 </>
             }
             {insertBtn &&
-                <button>{insertBtn.name}</button>
+                <button type="button" onClick={insertBtn.onclick}>{insertBtn.name}</button>
             }
             {/* <div className="input-underline"></div> */}
         </div>
     )
 }
+)
 
-export default FormText
+export default Input

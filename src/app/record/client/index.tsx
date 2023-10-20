@@ -55,6 +55,9 @@ export function Index(props: Props) {
     // const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>[]>([]);
 
     const lastId = records.at(-1).id;
+
+    // Ref
+    const refInput = useRef<HTMLInputElement>(null);
     const refView = useRef<HTMLDivElement>(null);
 
     function onchange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -92,7 +95,7 @@ export function Index(props: Props) {
                     <div className="record__operate">
                         <DialogRecord groupData={groupData} lastId={lastId} />
                         <div className="record__operate__input">
-                            <Input onchange={onchange} placeholder="搜尋規格" />
+                            <Input ref={refInput} onchange={onchange} placeholder="搜尋規格" />
                         </div>
                         {/* <div className="record__operate__groupview" style={toggleGroupViewShow}>
                                 <div className="groupview__wrapper">
