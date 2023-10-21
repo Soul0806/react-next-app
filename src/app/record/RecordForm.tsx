@@ -49,6 +49,7 @@ const RecordForm = forwardRef((props, ref) => {
     //  Router
 
     //  State 
+    const [seed, setSeed] = useState<number>(1);
     const [format, setFormat] = useState<string[]>([]);
     const [btnBehave, setBtnBehave] = useState<string | null>(null);
     const [record, setRecord] = useState({
@@ -91,20 +92,10 @@ const RecordForm = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (ref1.current) {
-            refDialogClose.current?.addEventListener('click', function () {
-                refDialogInsert.current.close();
-                setRecord(prev => {
-                    return {
-                        ...prev,
-                        inch: '17',
-                    }
-                })
-                const selects = document.querySelectorAll('select');
-                console.log(selects[1], selects[1].querySelector('[value="215-55/17"]'));
-                selects[0].querySelector('[value="17"]').setAttribute('selected', 'selected');
-                // document.querySelector('[value="17"]').setAttribute('selected', 'selected');
-
-            })
+            // refDialogClose.current?.addEventListener('click', function () {
+            //     refDialogInsert?.current?.close();
+            //     setSeed(Math.random());
+            // })
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -131,6 +122,13 @@ const RecordForm = forwardRef((props, ref) => {
             )
         }
     }, [record.inch])
+
+    useEffect(() => {
+
+    }, [format])
+
+
+
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         if (e.target.value == 'new') {
@@ -179,19 +177,22 @@ const RecordForm = forwardRef((props, ref) => {
 
     const insertBtn = {
         name: '新增',
-        onclick: (e: React.FormEvent<HTMLFormElement>) => {
-            const value = refInput?.current?.value
-            const inch = value?.slice(-2);
+        insert: (e: React.FormEvent<HTMLFormElement>) => {
+            if (refInput.current) {
+                const format = refInput?.current?.value
+                const inch = format?.slice(-2);
 
-            document.querySelector(`[value="${inch}"]`)?.setAttribute('selected', 'selected');
-            setRecord((prev): any => {
-                return {
-                    ...prev,
-                    inch: inch
-                }
-            })
-            refDialogInsert?.current?.close();
-        },
+                document.querySelector(`[value="${inch}"]`)?.setAttribute('selected', 'selected');
+                setRecord((prev): any => {
+                    return {
+                        ...prev,
+                        inch: inch
+                    }
+                })
+                refInput.current.value = '';
+                refDialogInsert?.current?.close();
+            }
+        }
     }
     return (
         <>

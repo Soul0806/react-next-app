@@ -52,7 +52,7 @@ const Input = forwardRef((props: Props, ref: any) => {
                 </>
             }
             {insertBtn &&
-                <button type="button" onClick={insertBtn.onclick}>{insertBtn.name}</button>
+                <button type="button" onClick={insertBtn.insert}>{insertBtn.name}</button>
             }
             {/* <div className="input-underline"></div> */}
         </div>
