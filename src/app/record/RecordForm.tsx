@@ -124,10 +124,17 @@ const RecordForm = forwardRef((props, ref) => {
     }, [record.inch])
 
     useEffect(() => {
+        if (record.inch) {
+            const select = document.querySelectorAll('select')[1];
 
+            document.querySelector('[value="new"]')?.removeAttribute('selected');
+            select?.querySelector('option')?.setAttribute('selected', 'selected');
+
+            // const selects = document.querySelectorAll('select');
+            // selects[1]?.querySelector('option')?.setAttribute('selected', 'selected')
+            // console.log(selects[1]?.querySelector('option'));
+        }
     }, [format])
-
-
 
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -178,6 +185,7 @@ const RecordForm = forwardRef((props, ref) => {
     const insertBtn = {
         name: '新增',
         insert: (e: React.FormEvent<HTMLFormElement>) => {
+            console.log(refInput.current);
             if (refInput.current) {
                 const format = refInput?.current?.value
                 const inch = format?.slice(-2);
