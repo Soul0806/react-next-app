@@ -20,13 +20,13 @@ function FormSelect({optgroup, name, option}: Props, ref: any) {
                         <optgroup label='--'>
                             {children}
                         </optgroup>
-                        {optgroup &&
+                        {/* {optgroup &&
                             <>
                                 <optgroup label="操作">
                                     <option value="new">新增</option>
                                 </optgroup>
                             </>
-                        }
+                        } */}
                     </>}
             >
                 {option.map((op: string | number, idx: number) => (

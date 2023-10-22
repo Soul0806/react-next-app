@@ -29,6 +29,7 @@ import 'air-datepicker/air-datepicker.css';
 // import css 
 
 const RECORD_API = `http://localhost:3000/api/record`;
+const SPEC_API = `http://localhost:3000/api/specification`;
 
 type Obj = {
     [key: string]: FormDataEntryValue,
@@ -92,10 +93,9 @@ const RecordForm = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (ref1.current) {
-            // refDialogClose.current?.addEventListener('click', function () {
-            //     refDialogInsert?.current?.close();
-            //     setSeed(Math.random());
-            // })
+            refDialogClose.current?.addEventListener('click', function () {
+                refDialogInsert?.current?.close();
+            })
             const picker = new AirDatepicker('#datepicker__insert', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -125,6 +125,7 @@ const RecordForm = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (record.inch) {
+            console.log('123');
             const select = document.querySelectorAll('select')[1];
 
             document.querySelector('[value="new"]')?.removeAttribute('selected');
@@ -138,11 +139,6 @@ const RecordForm = forwardRef((props, ref) => {
 
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.value == 'new') {
-            if (refDialogInsert.current) {
-                refDialogInsert.current.showModal();
-            }
-        }
         const { name, value } = e.target;
         setRecord(prev => {
             return {
@@ -152,7 +148,6 @@ const RecordForm = forwardRef((props, ref) => {
         })
     }
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-
         e.preventDefault();
 
         let payload: Obj = {};
@@ -181,11 +176,14 @@ const RecordForm = forwardRef((props, ref) => {
         setRecord(refEmpty.current);
 
     }
-
+    function handleInsert() {
+        if(refDialogInsert.current) {
+            refDialogInsert.current.showModal();
+        }
+    }
     const insertBtn = {
         name: '新增',
-        insert: (e: React.FormEvent<HTMLFormElement>) => {
-            console.log(refInput.current);
+        insert:  async (e: React.FormEvent<HTMLFormElement>) => {
             if (refInput.current) {
                 const format = refInput?.current?.value
                 const inch = format?.slice(-2);
@@ -197,6 +195,15 @@ const RecordForm = forwardRef((props, ref) => {
                         inch: inch
                     }
                 })
+
+                const payload = {
+                    format: format
+                }
+
+                const result = await axi.post(SPEC_API, payload);
+                groupData[inch].push(format);
+                setSeed(Math.random);
+
                 refInput.current.value = '';
                 refDialogInsert?.current?.close();
             }
@@ -240,9 +247,10 @@ const RecordForm = forwardRef((props, ref) => {
                         </div>
                         {record.inch != '' &&
                             <div>
-                                <FormSelect name="spec" optgroup={true} option={format} />
+                                <FormSelect key={seed} name="spec" optgroup={true} option={format} />
                             </div>
                         }
+                        <button type="button" onClick={handleInsert}>新增新規格</button>
                     </div>
                 }
                 {record.service == 'tire-change' &&
