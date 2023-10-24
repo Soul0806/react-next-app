@@ -117,7 +117,7 @@ export function Index(props: Props) {
                                     <ul>
                                         {filteredRecord[key].map(item => (
                                             <li key={item.id}>
-                                                <div>{item.spec} -- {item.note}</div>
+                                                <div>{item.spec} {item.price} {item.note}</div>
                                             </li>
                                         )
                                         )}

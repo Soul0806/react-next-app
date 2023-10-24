@@ -159,7 +159,7 @@ const RecordForm = forwardRef((props, ref) => {
         for (let [key, value] of formData) {
             payload[key] = value;
         }
-        // const result = await axi.post(RECORD_API, payload);
+        const result = await axi.post(RECORD_API, payload);
 
         // if (!isEmpty(result.data)) {
         //     const id = result.data.insertId;
@@ -177,13 +177,13 @@ const RecordForm = forwardRef((props, ref) => {
 
     }
     function handleInsert() {
-        if(refDialogInsert.current) {
+        if (refDialogInsert.current) {
             refDialogInsert.current.showModal();
         }
     }
     const insertBtn = {
         name: '新增',
-        insert:  async (e: React.FormEvent<HTMLFormElement>) => {
+        insert: async (e: React.FormEvent<HTMLFormElement>) => {
             if (refInput.current) {
                 const format = refInput?.current?.value
                 const inch = format?.slice(-2);
