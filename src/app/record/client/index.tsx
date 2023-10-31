@@ -9,7 +9,8 @@ import Input from '@/components/form/Input';
 // import Search from "./Search";
 
 // Type
-import type { GroupData } from "../DialogRecord";
+
+import { SizeType } from "../page";
 
 export const RecordContext = createContext<any | null>(null);
 
@@ -22,11 +23,9 @@ type GroupRecord = {
 }
 
 type Props = {
-    groupData: GroupData,
+    specGroup: SizeType,
     records: any[],
 }
-
-const test = 123;
 
 function groupRecord(records: Record[]) {
     const group_record: GroupRecord = {};
@@ -45,17 +44,16 @@ function groupRecord(records: Record[]) {
 
 export function Index(props: Props) {
 
-    const { groupData, records } = props;
+    const { specGroup, records } = props;
     const [filteredRecord, SetFilteredRecord] = useState<GroupRecord>({});
-    const [keys, setKeys] = useState<string[]>([]);
+    const [keys, setKeys] = useState<string[]>([]);    
 
     // const [t, tt] = useState([1, 2, 3, 4, 5]);
 
     // Timeout id 
     // const [timeoutId, setTimeoutId] = useState<ReturnType<typeof setTimeout>[]>([]);
 
-    const lastId = records.at(-1).id;
-
+    const lastId = records.at(-1).id;    
     // Ref
     const refInput = useRef<HTMLInputElement>(null);
     const refView = useRef<HTMLDivElement>(null);
@@ -89,11 +87,11 @@ export function Index(props: Props) {
 
     }
     return (
-        <RecordContext.Provider value={{ setKeys }}>
+        <RecordContext.Provider value={{ specGroup, setKeys }}>
             <div className="record">
                 <div className="wrapper">
-                    <div className="record__operate">
-                        <DialogRecord groupData={groupData} lastId={lastId} />
+                    <div className="record__operate">                        
+                        {/* <DialogRecord groupData={groupData} lastId={lastId} /> */}
                         <div className="record__operate__input">
                             <Input ref={refInput} onchange={onchange} placeholder="搜尋規格" />
                         </div>

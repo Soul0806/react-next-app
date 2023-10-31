@@ -7,33 +7,46 @@ import DialogRecord from './DialogRecord';
 import { Index } from './client/Index';
 
 export type Spec = {
-    [key: string]: string
+    id: number,
+    format: string,
 }
 
-export type GroupData = {
-    [key: string]: string[]
-}
+export type SizeType = {
+    size: string,
+    format: string[],
+} 
 
-function getGroupData(arr: Spec[]) {
-    let groupData: any = {}
-    arr.map((item: Spec) => {
-        const format = item.format;
-        const inch = format.slice(-2);
-        if (groupData[inch] === undefined) {
-            groupData[inch] = [format];
+// export type GroupData = {
+//     [key: string]: string[]
+// }
+
+function getSpecGroup(specArr: Spec[]): SizeType[] {
+    let group: SizeType[] = [];
+
+    specArr.map((spec: Spec) => {
+        let format = spec.format;
+        let size = format.slice(-2);
+        
+        let sizeObj =  group.find(obj => obj.size == size);
+
+        if(!sizeObj) {
+            let newObj = {} as SizeType;
+            newObj.size = size;
+            newObj.format = [format];
+            group.push(newObj);
         } else {
-            groupData[inch].push(format);
+            sizeObj.format.push(format);
         }
     })
-    return groupData;
+
+    return group;
 }
 
 export default async function Record() {
 
     const res_spec = await fetch('http://localhost:3000/api/specification', { cache: "no-store" });
-    const specs = await res_spec.json();
-    const groupData: GroupData = getGroupData(specs);
-
+    const specs: Spec[] = await res_spec.json();        
+    const specGroup = getSpecGroup(specs);        
 
     const res_record = await fetch('http://localhost:3000/api/record', { cache: "no-store" });
     const records: any[] = await res_record.json();
@@ -41,7 +54,7 @@ export default async function Record() {
 
     return (
         <>
-            <Index groupData={groupData} records={records} />
+            <Index specGroup={specGroup} records={records} />            
         </>
     );
 }
