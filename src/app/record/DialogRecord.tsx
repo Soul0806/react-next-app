@@ -1,23 +1,17 @@
 'use client'
 
-import { useRef, useEffect, createContext, useContext, forwardRef, RefObject } from "react";
+import { useRef, useEffect, forwardRef, RefObject } from "react";
 import RecordForm from "./RecordForm";
-import { Dom } from "@/lib/helper";
+import { Dom } from "@/lib/helper"
 
 export type GroupData = {
     [key: string]: string[]
 }
-export const Context = createContext<GroupData | {}>({});
-// export const LastIdContext = createContext<string | null>(null);
 
 type Props = {
-    groupData: GroupData,
-    lastId: string,
 }
 
-
-
-export default function DialogRecord({ groupData, lastId }: Props) {
+export default function DialogRecord({ }: Props) {
 
     // Ref 
     const ref = useRef<boolean>(false);
@@ -57,24 +51,22 @@ export default function DialogRecord({ groupData, lastId }: Props) {
 
     return (
         <>
-            <Context.Provider value={{ groupData, lastId }}>
-                <div className="record__operate__insert">
-                    <button type="button" className="dialog-sale__open">
-                        新增銷售
-                    </button>
-                </div>
-                <dialog className="dialog" ref={refDialogsRecord}>
-                    <div className="wrapper">
-                        <div className="dialog-menu">
-                            <h5 className="dialog-title">新增銷售</h5>
-                            <span ref={refDialogClose} className="material-symbols-outlined dialog-close">
-                                Close
-                            </span>
-                        </div>
-                        <RecordForm ref={refDialogsRecord}/>
+            <div className="record__operate__insert">
+                <button type="button" className="dialog-sale__open">
+                    新增銷售
+                </button>
+            </div>
+            <dialog className="dialog" ref={refDialogsRecord}>
+                <div className="wrapper">
+                    <div className="dialog-menu">
+                        <h5 className="dialog-title">新增銷售</h5>
+                        <span ref={refDialogClose} className="material-symbols-outlined dialog-close">
+                            Close
+                        </span>
                     </div>
-                </dialog>
-            </Context.Provider>
+                    <RecordForm ref={refDialogsRecord} />
+                </div>
+            </dialog>
         </>
     )
 }

@@ -1,8 +1,5 @@
 // 'use client'
 
-// import { useEffect, useRef } from 'react';
-import DialogRecord from './DialogRecord';
-
 // Client comp
 import { Index } from './client/Index';
 
@@ -15,10 +12,6 @@ export type SizeType = {
     size: string,
     format: string[],
 } 
-
-// export type GroupData = {
-//     [key: string]: string[]
-// }
 
 function getSpecGroup(specArr: Spec[]): SizeType[] {
     let group: SizeType[] = [];
@@ -38,23 +31,21 @@ function getSpecGroup(specArr: Spec[]): SizeType[] {
             sizeObj.format.push(format);
         }
     })
-
     return group;
 }
 
 export default async function Record() {
 
     const res_spec = await fetch('http://localhost:3000/api/specification', { cache: "no-store" });
-    const specs: Spec[] = await res_spec.json();        
+    const specs = await res_spec.json();        
     const specGroup = getSpecGroup(specs);        
 
     const res_record = await fetch('http://localhost:3000/api/record', { cache: "no-store" });
-    const records: any[] = await res_record.json();
-    const record_last_id: string = records.at(-1).id;
-
+    const records = await res_record.json();
+    
     return (
         <>
-            <Index specGroup={specGroup} records={records} />            
+            <Index specGroup={specGroup} records={records} />         
         </>
     );
 }

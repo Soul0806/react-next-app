@@ -1,16 +1,13 @@
 'use client'
 
 // React
-import React, { FC, forwardRef, useContext, useRef } from "react";
+import React, { forwardRef, useContext, useRef } from "react";
 
 // Context
-import { RecordContext } from "@/app/record/client/Index";
+import { RecordContext } from "@/app/record/context";
 
 // THird party
 import { isEmpty } from "lodash";
-
-// Css 
-// import style from '@/styles/comps/form.module.css';
 
 type Props = {
     label?: string,

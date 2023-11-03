@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState, useContext, useRef, forwardRef } from 'react';
-// import Router from "next/router";
+
+// Context
+import { RecordContext } from "./context";
 
 import FormSelect from '@/components/form/FormSelect';
 import FormRadio from '@/components/form/FormRadio';
@@ -9,9 +11,6 @@ import Input from '@/components/form/Input';
 
 // From Data 
 import { inputRadioPay, inputRadioPlace, inputRadioPrice, inputRadioService, inputTextSpec } from './RecordFormData';
-
-// Context
-import { Context } from './DialogRecord';
 
 // import { useTire } from '../Tire/useTire';
 import { dt } from '../../lib/helper';
@@ -35,21 +34,20 @@ type Obj = {
     [key: string]: FormDataEntryValue,
 }
 
-const RecordForm = forwardRef((props, ref) => {
+const RecordForm = (props, ref) => {
     /*
     // const [inches] = useTire
     */
 
-    // Default value 
+    // Context
+    const { specGroup, lastId } = useContext(RecordContext);
+
+    // Variable
     const DEFAULT_INCH: string = '12';
     const DEFAULT_INCH_RANGE = _.range(12, 23);
 
-    // Context
-    const { groupData, lastId }: any = useContext(Context)
-
-    //  Router
-
     //  State 
+    const [id, setId] = useState(lastId + 1);
     const [seed, setSeed] = useState<number>(1);
     const [format, setFormat] = useState<string[]>([]);
     const [btnBehave, setBtnBehave] = useState<string | null>(null);
@@ -66,8 +64,6 @@ const RecordForm = forwardRef((props, ref) => {
         // date: dt.getTodayDate(),
     });
 
-    const [id, setId] = useState(lastId + 1);
-
     // Ref
     const ref1 = useRef(false);
     const refDate = useRef<Date | Date[]>(new Date());
@@ -80,6 +76,7 @@ const RecordForm = forwardRef((props, ref) => {
     const refPrice = useRef<HTMLInputElement>(null);
     const refEmpty = useRef(record);
 
+    // Third party variable
     let button = {
         content: 'Today',
         className: 'custom-button-classname',
@@ -91,6 +88,39 @@ const RecordForm = forwardRef((props, ref) => {
         }
     }
 
+    const insertBtn = {
+        name: '新增',
+        insert: async (e: React.FormEvent<HTMLFormElement>) => {
+            if (refInput.current) {
+                const format = refInput?.current?.value
+                const inch = format?.slice(-2);
+
+                document.querySelector(`[value="${inch}"]`)?.setAttribute('selected', 'selected');
+                setRecord((prev): any => {
+                    return {
+                        ...prev,
+                        inch: inch
+                    }
+                })
+
+                const payload = {
+                    format: format
+                }
+                
+
+                // db query
+                const result = await axi.post(SPEC_API, payload);
+                let obj = specGroup.find((obj: any) => obj.size == inch);
+                obj['format'].push(format);
+                setSeed(Math.random);
+
+                refInput.current.value = '';
+                refDialogInsert?.current?.close();
+            }
+        }
+    }
+
+    // Effect
     useEffect(() => {
         if (ref1.current) {
             refDialogClose.current?.addEventListener('click', function () {
@@ -117,8 +147,9 @@ const RecordForm = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (record.inch) {
+            let obj = specGroup.find((obj: any) => obj.size == record.inch);
             setFormat(
-                groupData[record.inch].sort()
+                obj['format'].sort()
             )
         }
     }, [record.inch])
@@ -137,7 +168,7 @@ const RecordForm = forwardRef((props, ref) => {
         }
     }, [format])
 
-
+    // Event
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
         setRecord(prev => {
@@ -181,34 +212,8 @@ const RecordForm = forwardRef((props, ref) => {
             refDialogInsert.current.showModal();
         }
     }
-    const insertBtn = {
-        name: '新增',
-        insert: async (e: React.FormEvent<HTMLFormElement>) => {
-            if (refInput.current) {
-                const format = refInput?.current?.value
-                const inch = format?.slice(-2);
 
-                document.querySelector(`[value="${inch}"]`)?.setAttribute('selected', 'selected');
-                setRecord((prev): any => {
-                    return {
-                        ...prev,
-                        inch: inch
-                    }
-                })
-
-                const payload = {
-                    format: format
-                }
-
-                const result = await axi.post(SPEC_API, payload);
-                groupData[inch].push(format);
-                setSeed(Math.random);
-
-                refInput.current.value = '';
-                refDialogInsert?.current?.close();
-            }
-        }
-    }
+    // Return
     return (
         <>
             <form method="post" onSubmit={handleSubmit} ref={refForm} className="dialog-form" autoComplete="off">
@@ -297,6 +302,6 @@ const RecordForm = forwardRef((props, ref) => {
 
     )
 }
-)
 
-export default RecordForm;
+
+export default forwardRef(RecordForm);
