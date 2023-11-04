@@ -10,8 +10,10 @@ import Input from '@/components/form/Input';
 // Context
 import { RecordContext } from "../context";
 
-// Type
+// Import Type
 import { SizeType } from "../page";
+
+// Type
 
 type Record = {
     [key: string]: string
@@ -26,6 +28,8 @@ type Props = {
     records: any[],
 }
 
+
+// Funcional
 function groupRecord(records: Record[]): GroupRecord {
     const group_record: GroupRecord = {};
 

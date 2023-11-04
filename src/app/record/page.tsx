@@ -3,6 +3,8 @@
 // Client comp
 import { Index } from './client/Index';
 
+// Type
+
 export type Spec = {
     id: number,
     format: string,

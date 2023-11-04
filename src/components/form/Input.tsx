@@ -9,6 +9,7 @@ import { RecordContext } from "@/app/record/context";
 // THird party
 import { isEmpty } from "lodash";
 
+// Type
 type Props = {
     label?: string,
     placeholder?: string,
@@ -18,10 +19,9 @@ type Props = {
 }
 
 const Input = forwardRef((props: Props, ref: any) => {
-    const { label, insertBtn, onchange, onclick, ...inputs } = props;
 
-    // ref 
-    const refInput = useRef<HTMLInputElement>(null);
+    // Props
+    const { label, insertBtn, onchange, onclick, ...inputs } = props;
 
     // Use context 
     const { setKeys } = useContext(RecordContext);
@@ -32,6 +32,8 @@ const Input = forwardRef((props: Props, ref: any) => {
         }
         setKeys([]);
     }
+
+    // Return
     return (
         <div className="input-wrapper">
             <label className="input-label">{label}

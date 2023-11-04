@@ -1,27 +1,29 @@
 'use client'
 
+// React
 import { useRef, useEffect, forwardRef, RefObject } from "react";
+
+// Clinet comp
 import RecordForm from "./RecordForm";
+
+// Helper
 import { Dom } from "@/lib/helper"
 
+// Type
 export type GroupData = {
     [key: string]: string[]
 }
 
-type Props = {
-}
-
-export default function DialogRecord({ }: Props) {
+export default function DialogRecord() {
 
     // Ref 
     const ref = useRef<boolean>(false);
-    const refDate = useRef(new Date());
+    // const refDate = useRef(new Date());
     const refDialogClose = useRef<HTMLSpanElement | null>(null);
-    const refDialogsRecord = useRef<HTMLDialogElement>(null);
+    const refDialogsRecord = useRef<HTMLDialogElement| null>(null);
 
     useEffect(() => {
-        // document.getElementById('datepicker').innerHTML = "";
-
+        
         if (ref.current) {
             Dom('.dialog-sale__open').event('click', () => {
                 refDialogsRecord?.current?.showModal();

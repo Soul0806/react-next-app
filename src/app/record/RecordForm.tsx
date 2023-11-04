@@ -1,10 +1,12 @@
 'use client'
 
+// React
 import { useEffect, useState, useContext, useRef, forwardRef } from 'react';
 
 // Context
 import { RecordContext } from "./context";
 
+// Comps
 import FormSelect from '@/components/form/FormSelect';
 import FormRadio from '@/components/form/FormRadio';
 import Input from '@/components/form/Input';
@@ -12,29 +14,29 @@ import Input from '@/components/form/Input';
 // From Data 
 import { inputRadioPay, inputRadioPlace, inputRadioPrice, inputRadioService, inputTextSpec } from './RecordFormData';
 
-// import { useTire } from '../Tire/useTire';
+// Helper
 import { dt } from '../../lib/helper';
 import { axi } from '@/lib/axios';
-import { notify } from '@/lib/notify';
+// import { notify } from '@/lib/notify';
 
 // Third Party
-import _, { isEmpty } from 'lodash'
+import _ from 'lodash'
 
 // Air Datepicker 
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
 
-// import css 
-
+// API 
 const RECORD_API = `http://localhost:3000/api/record`;
 const SPEC_API = `http://localhost:3000/api/specification`;
 
+// Type
 type Obj = {
     [key: string]: FormDataEntryValue,
 }
 
-const RecordForm = (props, ref) => {
+function RecordForm() {
     /*
     // const [inches] = useTire
     */
@@ -52,14 +54,14 @@ const RecordForm = (props, ref) => {
     const [format, setFormat] = useState<string[]>([]);
     const [btnBehave, setBtnBehave] = useState<string | null>(null);
     const [record, setRecord] = useState({
-        // id: lastId + 1,
         area: '',
         service: '',
         inch: DEFAULT_INCH,
-        // spec: '',
         price: '',
-        // quantity: '',
         pay: '',
+        // id: lastId + 1,
+        // spec: '',
+        // quantity: '',
         // note: '',
         // date: dt.getTodayDate(),
     });
@@ -88,6 +90,8 @@ const RecordForm = (props, ref) => {
         }
     }
 
+
+    // 
     const insertBtn = {
         name: '新增',
         insert: async (e: React.FormEvent<HTMLFormElement>) => {
@@ -106,7 +110,6 @@ const RecordForm = (props, ref) => {
                 const payload = {
                     format: format
                 }
-                
 
                 // db query
                 const result = await axi.post(SPEC_API, payload);
@@ -190,6 +193,8 @@ const RecordForm = (props, ref) => {
         for (let [key, value] of formData) {
             payload[key] = value;
         }
+        
+        // db query
         const result = await axi.post(RECORD_API, payload);
 
         // if (!isEmpty(result.data)) {
