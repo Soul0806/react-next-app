@@ -1,6 +1,7 @@
 // 'use client'
 
 // Client comp
+import FancyOption from '@/components/ui/FancyOption';
 import { Index } from './client/Index';
 
 // Type
@@ -48,6 +49,7 @@ export default async function Record() {
     return (
         <>
             <Index specGroup={specGroup} records={records} />         
+            <FancyOption />
         </>
     );
 }

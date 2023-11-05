@@ -167,7 +167,12 @@ body {
   }
 
   .dialog-title {
+    cursor: default;
     flex: 1;
+  }
+
+  .dialog-close {
+    cursor: pointer;
   }
 
   .dialog-form {

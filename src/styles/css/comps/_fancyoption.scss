@@ -1,0 +1,17 @@
+.fancyoption {
+    position: relative;
+
+    height: calc(1em + 20px);    
+    line-height: calc(1em + 20px);
+    border: 1px solid black;   
+    
+    .option {
+        position: relative;
+        border: 1px solid red;
+        // top: calc(-1em - 20px);   
+
+        .item {
+            height: calc(1em + 20px); 
+        }
+    }
+}
