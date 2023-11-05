@@ -37,6 +37,11 @@ function getSpecGroup(specArr: Spec[]): SizeType[] {
     return group;
 }
 
+const option: string[] = ['11', '22', '33'];
+const defaultOption = option[0];
+const n: number = option.length - 1;
+
+
 export default async function Record() {
 
     const res_spec = await fetch('http://localhost:3000/api/specification', { cache: "no-store" });
@@ -49,7 +54,7 @@ export default async function Record() {
     return (
         <>
             <Index specGroup={specGroup} records={records} />         
-            <FancyOption />
+            <FancyOption option={option} defaultOption={defaultOption} n={n}/> 
         </>
     );
 }

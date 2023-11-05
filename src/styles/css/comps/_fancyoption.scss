@@ -1,17 +1,24 @@
 .fancyoption {
-    position: relative;
+    position: relative;    
+    
+    width: min-content;
+    border: 1px solid black;
+    border-radius: 10px;   
 
     height: calc(1em + 20px);    
     line-height: calc(1em + 20px);
-    border: 1px solid black;   
-    
+   
+    overflow: hidden;
     .option {
-        position: relative;
-        border: 1px solid red;
-        // top: calc(-1em - 20px);   
+     
+        padding: 0 1em;
+        transition: transform  400ms;
+        cursor: default;
 
+       
         .item {
             height: calc(1em + 20px); 
         }
     }
+
 }

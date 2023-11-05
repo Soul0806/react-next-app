@@ -3,63 +3,83 @@
 import { useEffect, useRef, useState } from "react";
 
 const option: string[] = ['11', '22', '33'];
+const defaultOption = option[0];
+const n: number = option.length - 1;
 
-function FancyOption() {
+function FancyOption({ option }: any) {
 
     // State 
-    const [ index, setIndex ] = useState<number>(0); 
+    const [i, setI] = useState<number>(0);
+    const [index, setIndex] = useState<number>(0);
+    const [value, setValue] = useState<string>(defaultOption);
 
     // Ref
-    const ref = useRef<HTMLDivElement | null>(null);
+    const ref = useRef<Boolean | null>(false);
+    const refOption = useRef<HTMLDivElement | null>(null);
 
     // Effect
     useEffect(() => {
+        if (ref.current) {
+            refOption.current?.addEventListener('transitionend', function () {
+                if (this.firstElementChild) {
+                    // this.removeChild(this.firstElementChild);
+                }
+            });
+        }
 
+        return () => {
+            ref.current = true;
+        }
     }, [])
 
-    // Function 
+    useEffect(() => {
+        setValue(option[index]);
+    }, [index])
 
+    useEffect(() => {
+        console.log(value);
+    }, [value])
+
+    // Function 
     function newDiv() {
         const div = document.createElement('div');
         const text = document.createTextNode(option[index]);
+        div.className = 'item';
         div.appendChild(text);
         setIndex((prev: number) => {
-            if(prev != 0 && prev%2 == 0) {
+            if (prev != 0 && prev % n == 0) {
                 return 0
             }
             return prev + 1;
         });
-        // const frag = document.createDocumentFragment();
+        setI(prev => prev + 1);
         return div;
     }
 
     // Event
     function handleClick() {
-        
-        if(ref.current) {
-            const elem = ref.current;            
-            const offsetTop = elem.offsetTop;    
 
-            ref.current.style.transform = `translateY(calc(${index +1 } * (-1em - 20px)))`;
-            // ref.current.style.transform = `translateY(calc(-1em - 20px))`;
-            elem.style.top = (offsetTop) + "px";        
+        if (refOption.current) {
+            const elem = refOption.current;
+            const offsetTop = elem.offsetTop;
 
-            elem.appendChild(newDiv());                    
-            // if(elem.firstElementChild) {
-            //     elem.removeChild(elem.firstElementChild);
-            // }
-           
-           
-        }        
+            refOption.current.style.transform = `translateY(calc(${i + 1} * (-1em - 20px)))`;
+            elem.appendChild(newDiv());
+        }
     }
     return (
-        <div className="fancyoption">
-            <div ref={ref} className="option" onClick={handleClick}>
-                <div className="item">11</div>
-                <div className="item">22</div>
-                <div className="item">33</div>
+        <>
+         <div className="fancyoption">
+            <div ref={refOption} className="option" onClick={handleClick}>
+                {option.map((item, key) => (
+                    <div key={key} className="item">{item}</div>
+                ))
+                }
             </div>
+            <div className="tip">點選</div>
         </div>
+        </>
+       
     )
 }
 

@@ -26,6 +26,7 @@ import _ from 'lodash'
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
+import FancyOption from '@/components/ui/FancyOption';
 
 // API 
 const RECORD_API = `http://localhost:3000/api/record`;
@@ -159,7 +160,6 @@ function RecordForm() {
 
     useEffect(() => {
         if (record.inch) {
-            console.log('123');
             const select = document.querySelectorAll('select')[1];
 
             document.querySelector('[value="new"]')?.removeAttribute('selected');
@@ -218,6 +218,11 @@ function RecordForm() {
         }
     }
 
+    // const option: string[] = ['11', '22', '33'];
+    // const defaultOption = option[0];
+    // const n: number = option.length - 1;
+
+
     // Return
     return (
         <>
@@ -237,6 +242,7 @@ function RecordForm() {
                     {inputRadioPlace.map(radio => {
                         return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                     })}
+                    {/* <FancyOption option={option} defaultOption={defaultOption} n={n}/> */}
                     {
                         !record.area && <span className="dialog-form__invalid">請選擇地點</span>
                     }
