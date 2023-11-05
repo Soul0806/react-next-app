@@ -39,14 +39,17 @@ function FancyOption() {
         if(ref.current) {
             const elem = ref.current;            
             const offsetTop = elem.offsetTop;    
-            elem.style.top = (offsetTop - 38) + "px";        
+
+            ref.current.style.transform = `translateY(calc(${index +1 } * (-1em - 20px)))`;
+            // ref.current.style.transform = `translateY(calc(-1em - 20px))`;
+            elem.style.top = (offsetTop) + "px";        
 
             elem.appendChild(newDiv());                    
             // if(elem.firstElementChild) {
             //     elem.removeChild(elem.firstElementChild);
             // }
            
-            // ref.current.style.transform = 'translateY(10px)';
+           
         }        
     }
     return (
