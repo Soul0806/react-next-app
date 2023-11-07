@@ -55,18 +55,18 @@ export default async function Record() {
     const defaultOption = option[0];
     const n: number = option.length - 1;
 
-    const fanccyOptionProp = {
-        option,
-        defaultOption,
-        n,
-        name: 'area',
-        setRecord: undefined,
-    }
+    // const fanccyOptionProp = {
+    //     option,
+    //     defaultOption,
+    //     n,
+    //     name: 'area',
+    //     // setRecord: undefined,
+    // }
     
     return (
         <>
             <Index specGroup={specGroup} records={records} />         
-            <FancyOption option={option} defaultOption={defaultOption} n={n}/> 
+            {/* <FancyOption {...fanccyOptionProp}/>  */}
         </>
     );
 }

@@ -175,6 +175,36 @@ function RecordForm() {
         }
     }, [format])
 
+    // Function
+
+    function getOptionProp(label: string, name: string, option: any[]) {
+
+        const defaultOptionValue = option[0]['value'];
+        const n: number = option.length - 1;
+        return {
+            option,
+            defaultOptionValue,
+            n,
+            label,
+            name,
+            setRecord
+        }
+    }
+ 
+    const areaOption: any[] = [{ value: 'store', name: '店內' }, { value: 'out-service', name: '外出' }];
+    const serviceOption: any[] = [{ value: 'fix', name: '補胎' }, { value: 'tire-change', name: '換胎' }];
+    const payOption: any[] = [
+        { value: 'cash', name: '現金' }, 
+        { value: 'credit', name: '刷卡' },
+        { value: 'transfer', name: '轉帳' }
+    ];
+
+
+    const areaOptionProp = getOptionProp('地點', 'area', areaOption);
+    const serviceOptionProp = getOptionProp('服務', 'service', serviceOption);
+    const payOptionProp = getOptionProp('付款', 'pay', payOption);
+
+
     // Event
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
@@ -222,19 +252,6 @@ function RecordForm() {
         }
     }
 
-    const option: string[] = ['店內', '外出'];
-    const defaultOption = option[0];
-    const n: number = option.length - 1;
-
-    const fanccyOptionProp = {
-        option,
-        defaultOption,
-        n,
-        name: 'area',
-        setRecord
-    }
-
-
     // Return
     return (
         <>
@@ -254,7 +271,7 @@ function RecordForm() {
                     {inputRadioPlace.map(radio => (
                          <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                     ))}
-                    <FancyOption {...fanccyOptionProp}/>
+                    <FancyOption {...areaOptionProp}/>                
                     {
                         !record.area && <span className="dialog-form__invalid">請選擇地點</span>
                     }
@@ -263,6 +280,7 @@ function RecordForm() {
                     {inputRadioService.map(radio => {
                         return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                     })}
+                    <FancyOption {...serviceOptionProp}/>
                     {
                         !record.service && <span className="dialog-form__invalid">請選擇服務</span>
                     }
@@ -307,6 +325,7 @@ function RecordForm() {
                     {inputRadioPay.map(radio => {
                         return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                     })}
+                    <FancyOption {...payOptionProp}/>
                     {
                         !record.pay && <span className="dialog-form__invalid">請選擇付款方式</span>
                     }

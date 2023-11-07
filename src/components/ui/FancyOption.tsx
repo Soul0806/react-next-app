@@ -8,12 +8,12 @@ import React, { useEffect, useRef, useState } from "react";
 
 function FancyOption(props: any) {
 
-    const { option, defaultOption, n, name, setRecord} = props;
+    const { option, areaOptionValue, n, name, setRecord} = props;
 
     // State 
     const [i, setI] = useState<number>(0);
     const [index, setIndex] = useState<number>(0);
-    const [value, setValue] = useState<string>(defaultOption);
+    const [value, setValue] = useState<string>(areaOptionValue);
 
     // Ref
     const ref = useRef<Boolean | null>(false);
@@ -35,7 +35,7 @@ function FancyOption(props: any) {
     }, [])
 
     useEffect(() => {
-        setValue(option[index]);
+        setValue(option[index]['value']);
     }, [index])
 
     useEffect(() => {
@@ -45,7 +45,7 @@ function FancyOption(props: any) {
     // Function 
     function newDiv() {
         const div = document.createElement('div');
-        const text = document.createTextNode(option[index]);
+        const text = document.createTextNode(option[index]['name']);
         div.className = 'item';
         div.appendChild(text);
         setIndex((prev: number) => {
@@ -81,11 +81,10 @@ function FancyOption(props: any) {
          <div className="fancyoption">
             <div ref={refOption} className="option" onClick={handleClick}>
                 {option.map((item, key) => (
-                    <div key={key} className="item">{item}</div>
+                    <div key={key} className="item">{item['name']}</div>
                 ))
                 }
-            </div>
-            <div className="tip">點選</div>
+            </div>            
         </div>
         </>
        
