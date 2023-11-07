@@ -1,14 +1,15 @@
 .fancyoption {
+    font-size: 1.4rem;
     position: relative;    
     
-    width: min-content;
+    width: fit-content;
     border: 1px solid black;
     border-radius: 10px;   
 
     height: calc(1em + 20px);    
     line-height: calc(1em + 20px);
    
-    overflow: hidden;
+    // overflow: hidden;
     .option {
      
         padding: 0 1em;

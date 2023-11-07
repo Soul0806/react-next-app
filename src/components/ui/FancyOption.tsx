@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const option: string[] = ['11', '22', '33'];
-const defaultOption = option[0];
-const n: number = option.length - 1;
+// const option: string[] = ['11', '22', '33'];
+// const defaultOption = option[0];
+// const n: number = option.length - 1;
 
-function FancyOption({ option }: any) {
+function FancyOption(props: any) {
+
+    const { option, defaultOption, n, name, setRecord} = props;
 
     // State 
     const [i, setI] = useState<number>(0);
@@ -57,7 +59,7 @@ function FancyOption({ option }: any) {
     }
 
     // Event
-    function handleClick() {
+    function handleClick(e: React.MouseEvent<HTMLElement>) {
 
         if (refOption.current) {
             const elem = refOption.current;
@@ -66,6 +68,13 @@ function FancyOption({ option }: any) {
             refOption.current.style.transform = `translateY(calc(${i + 1} * (-1em - 20px)))`;
             elem.appendChild(newDiv());
         }
+
+        setRecord((prev: any) => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        })
     }
     return (
         <>

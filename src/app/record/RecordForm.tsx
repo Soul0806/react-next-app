@@ -150,6 +150,10 @@ function RecordForm() {
     }, [])
 
     useEffect(() => {
+        console.log(record);
+    },[record])
+
+    useEffect(() => {
         if (record.inch) {
             let obj = specGroup.find((obj: any) => obj.size == record.inch);
             setFormat(
@@ -218,9 +222,17 @@ function RecordForm() {
         }
     }
 
-    // const option: string[] = ['11', '22', '33'];
-    // const defaultOption = option[0];
-    // const n: number = option.length - 1;
+    const option: string[] = ['店內', '外出'];
+    const defaultOption = option[0];
+    const n: number = option.length - 1;
+
+    const fanccyOptionProp = {
+        option,
+        defaultOption,
+        n,
+        name: 'area',
+        setRecord
+    }
 
 
     // Return
@@ -239,10 +251,10 @@ function RecordForm() {
                 </dialog>
                 <div id="datepicker__insert"></div>
                 <div className="modal-place">
-                    {inputRadioPlace.map(radio => {
-                        return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                    })}
-                    {/* <FancyOption option={option} defaultOption={defaultOption} n={n}/> */}
+                    {inputRadioPlace.map(radio => (
+                         <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                    ))}
+                    <FancyOption {...fanccyOptionProp}/>
                     {
                         !record.area && <span className="dialog-form__invalid">請選擇地點</span>
                     }

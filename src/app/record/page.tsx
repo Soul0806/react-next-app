@@ -50,6 +50,18 @@ export default async function Record() {
 
     const res_record = await fetch('http://localhost:3000/api/record', { cache: "no-store" });
     const records = await res_record.json();
+
+    const option: string[] = ['店內', '外出'];
+    const defaultOption = option[0];
+    const n: number = option.length - 1;
+
+    const fanccyOptionProp = {
+        option,
+        defaultOption,
+        n,
+        name: 'area',
+        setRecord: undefined,
+    }
     
     return (
         <>
