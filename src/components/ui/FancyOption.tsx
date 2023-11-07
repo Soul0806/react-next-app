@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 function FancyOption(props: any) {
 
-    const { option, areaOptionValue, n, name, setRecord} = props;
+    const { option, areaOptionValue, n, name, setRecord } = props;
 
     // State 
     const [i, setI] = useState<number>(0);
@@ -39,7 +39,12 @@ function FancyOption(props: any) {
     }, [index])
 
     useEffect(() => {
-        console.log(value);
+        setRecord((prev: any) => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        })
     }, [value])
 
     // Function 
@@ -48,6 +53,7 @@ function FancyOption(props: any) {
         const text = document.createTextNode(option[index]['name']);
         div.className = 'item';
         div.appendChild(text);
+
         setIndex((prev: number) => {
             if (prev != 0 && prev % n == 0) {
                 return 0
@@ -69,25 +75,19 @@ function FancyOption(props: any) {
             elem.appendChild(newDiv());
         }
 
-        setRecord((prev: any) => {
-            return {
-                ...prev,
-                [name]: value
-            }
-        })
     }
     return (
         <>
-         <div className="fancyoption">
-            <div ref={refOption} className="option" onClick={handleClick}>
-                {option.map((item, key) => (
-                    <div key={key} className="item">{item['name']}</div>
-                ))
-                }
-            </div>            
-        </div>
+            <div className="fancyoption">
+                <div ref={refOption} className="option" onClick={handleClick}>
+                    {option.map((item, key) => (
+                        <div key={key} className="item">{item['name']}</div>
+                    ))
+                    }
+                </div>
+            </div>
         </>
-       
+
     )
 }
 
