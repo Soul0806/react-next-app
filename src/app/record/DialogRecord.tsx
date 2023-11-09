@@ -1,7 +1,7 @@
 'use client'
 
 // React
-import { useRef, useEffect, forwardRef, RefObject } from "react";
+import { useRef, useEffect, forwardRef, RefObject, useState } from "react";
 
 // Clinet comp
 import RecordForm from "./RecordForm";
@@ -15,6 +15,8 @@ export type GroupData = {
 }
 
 export default function DialogRecord() {
+
+    // State
 
     // Ref 
     const ref = useRef<boolean>(false);
@@ -50,7 +52,24 @@ export default function DialogRecord() {
         }
     }, [])
 
+    // Event 
+    function changeForm() {
+        if(refDialogsRecord.current) {
+            
+            const form: HTMLElement | null = refDialogsRecord.current?.querySelector('.dialog-form');
 
+            if(form) {
+                form.style.flexDirection = 'row';
+                refDialogsRecord.current.style.maxHeight = 'auto';
+                refDialogsRecord.current.style.width = '90%';
+            } else {
+                // form.style.flexDirection = 'column';
+                // refDialogsRecord.current.style.maxHeight = originHeight.toString();
+                // refDialogsRecord.current.style.width = originWidth.toString();
+            }            
+        }
+        
+    }
     return (
         <>
             <div className="record__operate__insert">
@@ -61,6 +80,7 @@ export default function DialogRecord() {
             <dialog className="dialog" ref={refDialogsRecord}>
                 <div className="wrapper">
                     <div className="dialog-menu">
+                        <button type="button" onClick={changeForm}>Click</button>
                         <h5 className="dialog-title">新增銷售</h5>
                         <span ref={refDialogClose} className="material-symbols-outlined dialog-close">
                             Close

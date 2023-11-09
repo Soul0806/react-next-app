@@ -199,7 +199,6 @@ function RecordForm() {
         { value: 'transfer', name: '轉帳' }
     ];
 
-
     const areaOptionProp = getOptionProp('地點', 'area', areaOption);
     const serviceOptionProp = getOptionProp('服務', 'service', serviceOption);
     const payOptionProp = getOptionProp('付款', 'pay', payOption);
@@ -252,13 +251,14 @@ function RecordForm() {
         }
     }
 
+
     // Return
     return (
         <>
             <form method="post" onSubmit={handleSubmit} ref={refForm} className="dialog-form" autoComplete="off">
                 <dialog style={{ width: '30%' }} className="dialog" ref={refDialogInsert}>
                     <div className="wrapper">
-                        <div className="dialog-menu">
+                        <div className="dialog-menu">                            
                             <h5 className="dialog-title">新增項目</h5>
                             <span ref={refDialogClose} className="material-symbols-outlined dialog-close">Close</span></div>
                     </div>
