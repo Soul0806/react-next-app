@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <header className="header">
             <div className="wrapper">
-                <nav className="nav">
+                <nav className="nav">                    
                     <Link className="header__home" href="/">Product</Link>
                     <Link className="header__app" href="/tire/upstair/spec/12">庫存管理</Link>
                     <Link className="header__app" href="/record">銷售</Link>

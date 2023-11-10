@@ -26,7 +26,10 @@ import _ from 'lodash'
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
+
+// UI
 import FancyOption from '@/components/ui/FancyOption';
+import Datepicker from '@/components/ui/DatePikcer';
 
 // API 
 const RECORD_API = `http://localhost:3000/api/record`;
@@ -37,7 +40,8 @@ type Obj = {
     [key: string]: FormDataEntryValue,
 }
 
-function RecordForm() {
+function RecordForm({ Comps }: any) {
+    
     /*
     // const [inches] = useTire
     */
@@ -80,17 +84,16 @@ function RecordForm() {
     const refEmpty = useRef(record);
 
     // Third party variable
-    let button = {
-        content: 'Today',
-        className: 'custom-button-classname',
-        onClick: (dp: any) => {
-            let date = new Date();
-            dp.selectDate(date);
-            dp.setViewDate(date);
-            refDate.current = date;
-        }
-    }
-
+    // let button = {
+    //     content: 'Today',
+    //     className: 'custom-button-classname',
+    //     onClick: (dp: any) => {
+    //         let date = new Date();
+    //         dp.selectDate(date);
+    //         dp.setViewDate(date);
+    //         refDate.current = date;
+    //     }
+    // }
 
     // 
     const insertBtn = {
@@ -130,19 +133,19 @@ function RecordForm() {
             refDialogClose.current?.addEventListener('click', function () {
                 refDialogInsert?.current?.close();
             })
-            const picker = new AirDatepicker('#datepicker__insert', {
-                navTitles: {
-                    days: dt.getTodayDate()
-                },
-                locale: localeEn,
-                inline: true,
-                buttons: [button],
-                onSelect: function ({ date, datepicker }) {
-                    if (!date) return;
-                    datepicker.nav.$title.innerHTML = date.toLocaleString().split(' ')[0];
-                    refDate.current = date;
-                },
-            });
+            // const picker = new AirDatepicker('#datepicker__insert', {
+            //     navTitles: {
+            //         days: dt.getTodayDate()
+            //     },
+            //     locale: localeEn,
+            //     inline: true,
+            //     buttons: [button],
+            //     onSelect: function ({ date, datepicker }) {
+            //         if (!date) return;
+            //         datepicker.nav.$title.innerHTML = date.toLocaleString().split(' ')[0];
+            //         refDate.current = date;
+            //     },
+            // });
         }
         return () => {
             ref1.current = true;
@@ -226,9 +229,11 @@ function RecordForm() {
         for (let [key, value] of formData) {
             payload[key] = value;
         }
+
+        // console.log(payload);
         
         // db query
-        const result = await axi.post(RECORD_API, payload);
+        // const result = await axi.post(RECORD_API, payload);
 
         // if (!isEmpty(result.data)) {
         //     const id = result.data.insertId;
@@ -251,10 +256,9 @@ function RecordForm() {
         }
     }
 
-
     // Return
     return (
-        <>
+        <>              
             <form method="post" onSubmit={handleSubmit} ref={refForm} className="dialog-form" autoComplete="off">
                 <dialog style={{ width: '30%' }} className="dialog" ref={refDialogInsert}>
                     <div className="wrapper">
@@ -266,7 +270,8 @@ function RecordForm() {
                         <Input ref={refInput} insertBtn={insertBtn} />
                     </div>
                 </dialog>
-                <div id="datepicker__insert"></div>
+                <Datepicker ref={refDate}/>
+                {/* <div id="datepicker__insert"></div> */}
                 <div className="modal-place">
                     {inputRadioPlace.map(radio => (
                          <FormRadio key={radio.id} {...radio} onchange={handleChange} />
@@ -346,4 +351,4 @@ function RecordForm() {
 }
 
 
-export default forwardRef(RecordForm);
+export default RecordForm;

@@ -14,9 +14,16 @@ export type GroupData = {
     [key: string]: string[]
 }
 
+// UI
+import Datepicker, {  } from '@/components/ui/DatePikcer';
+
+// console.log(picker);
+
 export default function DialogRecord() {
 
     // State
+
+    const [ changeList, setChangeList ] = useState<boolean>(false);
 
     // Ref 
     const ref = useRef<boolean>(false);
@@ -58,16 +65,18 @@ export default function DialogRecord() {
             
             const form: HTMLElement | null = refDialogsRecord.current?.querySelector('.dialog-form');
 
-            if(form) {
+            if(form && !changeList) {
                 form.style.flexDirection = 'row';
                 refDialogsRecord.current.style.maxHeight = 'auto';
                 refDialogsRecord.current.style.width = '90%';
             } else {
-                // form.style.flexDirection = 'column';
-                // refDialogsRecord.current.style.maxHeight = originHeight.toString();
-                // refDialogsRecord.current.style.width = originWidth.toString();
+                form.style.flexDirection = 'column';
+                refDialogsRecord.current.style.maxHeight = 'auto';
+                refDialogsRecord.current.style.width = '50%';
             }            
         }
+
+        setChangeList(prev => !prev);
         
     }
     return (
@@ -86,7 +95,7 @@ export default function DialogRecord() {
                             Close
                         </span>
                     </div>
-                    <RecordForm ref={refDialogsRecord} />
+                    <RecordForm Comps={Datepicker}/>
                 </div>
             </dialog>
         </>
