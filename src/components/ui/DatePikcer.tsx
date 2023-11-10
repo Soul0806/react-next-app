@@ -19,8 +19,7 @@ type Props = {}
 function Datepicker(props: Props, refDate: any) {
     
     const refAnchor = useRef<boolean>(false);
-    // const refDate = useRef<Date | Date[]>(new Date());
-
+    // const refDate = useRef<Date | Date[]>(new Date());    
     // Third party variable
     let button = {
         content: 'Today',
@@ -49,6 +48,7 @@ function Datepicker(props: Props, refDate: any) {
                     refDate.current = date;
                 },
             });
+
         }
         return () => {
             refAnchor.current = true;
